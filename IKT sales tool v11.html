@@ -1,0 +1,2095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIM & ICT Infrastructure Services | Danish AEC Digital Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0a0e14;
+            --surface: #151920;
+            --surface2: #1c2128;
+            --border: #2d3440;
+            --accent: #00a3ff;
+            --accent2: #00d9ff;
+            --accent3: #ffa500;
+            --accent4: #00ff88;
+            --text: #e8edf3;
+            --muted: #8b96a5;
+            --highlight: #162030;
+            --red: #ff6b6b;
+            --util-water: #2196F3;
+            --util-hvac: #FF9800;
+            --util-elec: #FFC107;
+            --util-sewer: #795548;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* HERO with infrastructure theme */
+        .hero {
+            padding: 3.5rem 2rem 3rem;
+            border-bottom: 1px solid var(--border);
+            background: 
+                linear-gradient(135deg, rgba(0, 163, 255, 0.03) 0%, rgba(0, 217, 255, 0.02) 100%),
+                repeating-linear-gradient(90deg, transparent, transparent 100px, rgba(0, 163, 255, 0.03) 100px, rgba(0, 163, 255, 0.03) 102px);
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 163, 255, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-text { flex: 1; min-width: 300px; }
+
+        .eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent2);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: var(--accent2);
+            display: inline-block;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+            position: relative;
+        }
+
+        .hero-sub {
+            font-size: 1rem;
+            color: var(--muted);
+            max-width: 620px;
+            line-height: 1.75;
+            margin-bottom: 1.8rem;
+        }
+
+        .pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .pill {
+            background: rgba(0, 163, 255, 0.08);
+            border: 1px solid rgba(0, 163, 255, 0.2);
+            color: #6ec9ff;
+            font-size: 0.72rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .pill.tool {
+            border-color: rgba(0, 255, 136, 0.25);
+            background: rgba(0, 255, 136, 0.07);
+            color: #5fdc9f;
+        }
+
+        .pill.reg {
+            border-color: rgba(255, 165, 0, 0.2);
+            background: rgba(255, 165, 0, 0.06);
+            color: #ffb84d;
+        }
+
+        /* Language toggle */
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            margin-top: 0.3rem;
+        }
+
+        .lang-btn {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.04em;
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #0a0e14;
+        }
+
+        .lang-btn:hover:not(.active) {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Tabs */
+        .tabs-outer {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .role-tabs {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .role-btn {
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 0.9rem 1.6rem;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .role-btn:hover { color: var(--text); }
+        .role-btn.active {
+            color: var(--accent3);
+            border-bottom-color: var(--accent3);
+        }
+
+        .seg-tabs-wrap { overflow-x: auto; }
+
+        .seg-tabs {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            white-space: nowrap;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 0.85rem 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .tab-btn:hover { color: var(--text); }
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Main content */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem 6rem;
+        }
+
+        .role-panel { display: none; }
+        .role-panel.active { display: block; }
+
+        .seg-view { display: none; }
+        .seg-view.active {
+            display: block;
+            animation: fadeUp 0.3s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Segment header */
+        .seg-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2.2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .seg-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .seg-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .seg-tagline {
+            font-size: 0.88rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 0.3rem;
+        }
+
+        .reg-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255, 165, 0, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.25);
+            color: var(--accent3);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.75rem;
+            border-radius: 4px;
+            margin-top: 0.6rem;
+        }
+
+        /* Pitch */
+        .pitch {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            padding: 1.4rem 1.6rem;
+            margin-bottom: 2.2rem;
+            font-size: 0.92rem;
+            line-height: 1.8;
+            color: #c9d5e0;
+        }
+
+        .pitch strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Grid */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 650px) {
+            .two-col { grid-template-columns: 1fr; }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.3rem 1.4rem;
+        }
+
+        .card-label {
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-label.pain { color: var(--red); }
+        .card-label.kpi { color: var(--accent); }
+        .card-label.tools { color: var(--accent2); }
+        .card-label.neutral { color: var(--muted); }
+
+        /* Lists */
+        ul.bare { list-style: none; }
+        ul.bare li {
+            font-size: 0.87rem;
+            color: #c5cdd6;
+            line-height: 1.6;
+            padding: 0.45rem 0;
+            border-bottom: 1px solid #1f2733;
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+
+        ul.bare li:last-child { border-bottom: none; }
+        ul.bare li::before {
+            content: '▸';
+            color: var(--accent);
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+
+        /* Section label */
+        .section-label {
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Chips with hover popup */
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .chip {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            padding: 0.45rem 0.9rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .chip:hover {
+            border-color: var(--accent2);
+            background: rgba(0, 217, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .chip::before {
+            content: '◆';
+            color: var(--accent2);
+            font-size: 0.7rem;
+        }
+
+        /* Popup tooltip on hover */
+        .chip .popup {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--surface2);
+            border: 1px solid var(--accent2);
+            border-radius: 8px;
+            padding: 0.9rem 1.1rem;
+            font-size: 0.75rem;
+            line-height: 1.6;
+            color: var(--text);
+            width: 280px;
+            z-index: 100;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+        }
+
+        .chip .popup::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: var(--accent2);
+        }
+
+        .chip:hover .popup {
+            display: block;
+        }
+
+        .popup-icon {
+            font-size: 1.4rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .popup-title {
+            font-weight: 600;
+            color: var(--accent2);
+            margin-bottom: 0.3rem;
+        }
+
+        /* Benefits */
+        .benefits-list { list-style: none; }
+        .benefits-list li {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent2);
+            border-radius: 0 8px 8px 0;
+            padding: 0.85rem 1.1rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.89rem;
+            line-height: 1.7;
+            color: #c9d5e0;
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .price-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.4rem;
+            transition: all 0.2s;
+        }
+
+        .price-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .price-card.featured {
+            background: var(--highlight);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent);
+        }
+
+        .price-tier {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent3);
+            margin-bottom: 0.4rem;
+        }
+
+        .price-card.featured .price-tier { color: var(--accent); }
+
+        .price-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        .price-range {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent2);
+            margin-bottom: 0.7rem;
+        }
+
+        .price-card.featured .price-range { color: var(--accent); }
+
+        .price-desc {
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 1rem;
+        }
+
+        .price-inc {
+            list-style: none;
+            font-size: 0.79rem;
+        }
+
+        .price-inc li {
+            padding: 0.25rem 0;
+            display: flex;
+            gap: 0.45rem;
+            color: #b5c2d0;
+        }
+
+        .price-inc li::before {
+            content: '✓';
+            color: var(--accent2);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .price-card.featured .price-inc li::before { color: var(--accent); }
+
+        /* Rate table */
+        .rate-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.86rem;
+            margin-bottom: 2rem;
+        }
+
+        .rate-table th {
+            text-align: left;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+            padding: 0.65rem 0.9rem;
+        }
+
+        .rate-table td {
+            padding: 0.65rem 0.9rem;
+            border-bottom: 1px solid #1f2733;
+            vertical-align: top;
+            line-height: 1.6;
+            color: #c5cdd6;
+        }
+
+        .rate-table tr:last-child td { border-bottom: none; }
+        .rate-table td:nth-child(2) {
+            font-weight: 600;
+            color: var(--accent2);
+            white-space: nowrap;
+        }
+
+        .rate-table tr:hover td {
+            background: var(--surface2);
+        }
+
+        /* Cross cards */
+        .cross-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .cross-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--accent);
+            border-radius: 0 0 10px 10px;
+            padding: 1.3rem;
+        }
+
+        .cross-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+            margin-bottom: 0.6rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .cross-card p {
+            font-size: 0.84rem;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        /* Starters */
+        .starters { list-style: none; }
+        .starters li {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.95rem 1.1rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: #c9d5e0;
+            display: flex;
+            gap: 0.9rem;
+            align-items: flex-start;
+        }
+
+        .starters li .seg-tag {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--accent3);
+            font-size: 0.69rem;
+            font-weight: 600;
+            padding: 0.22rem 0.6rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 0.15rem;
+        }
+
+        .starters li .quote {
+            font-style: italic;
+            color: #a8bcc8;
+        }
+
+        /* Three col */
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 800px) {
+            .three-col { grid-template-columns: 1fr; }
+        }
+
+        /* ── HOVER IMAGE POPUP ── */
+        .hover-wrap { position: relative; display: inline-block; }
+        .popup-img { display: none; }
+        #global-popup {
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 600px;
+          border-radius: 6px;
+          box-shadow: 0 8px 32px rgba(0,0,0,.9);
+          z-index: 999999;
+          pointer-events: none;
+        }
+
+        /* ── CHIP POPUP ── */
+        .chip .popup { display: none !important; }
+        #chip-popup {
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 320px;
+          background: #111827;
+          border: 1px solid #00c8f0;
+          border-radius: 8px;
+          padding: 1.1rem 1.2rem;
+          box-shadow: 0 8px 40px rgba(0,0,0,.95);
+          z-index: 999999;
+          pointer-events: none;
+        }
+        #chip-popup .popup-icon { font-size: 1.6rem; margin-bottom: .4rem; }
+        #chip-popup .popup-title {
+          font-size: 1rem;
+          font-weight: 700;
+          color: #ffffff;
+          margin-bottom: .5rem;
+        }
+        #chip-popup .popup-body {
+          font-size: .85rem;
+          line-height: 1.65;
+          color: #a8b8c8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <div class="eyebrow" 
+                     data-en="BIM · ICT · Infrastructure Digital Delivery"
+                     data-da="BIM · IKT · Digital Infrastrukturaflevering">BIM · ICT · Infrastructure Digital Delivery</div>
+
+                <h1 data-en="BIM & ICT Services<br>for Danish Infrastructure & Buildings"
+                    data-da="BIM- & IKT-tjenester<br>til dansk infrastruktur & byggeri"><em></em> BIM & ICT Services<br>for Danish Infrastructure & Buildings</h1>
+
+                <p class="hero-sub" 
+                   data-en="Specialized digital delivery for utilities, district heating, underground infrastructure, and complex building systems. Compliant with Danish ICT Order, ISO 19650, and utility sector standards."
+                   data-da="Specialiseret digital levering til forsyning, fjernvarme, underjordisk infrastruktur og komplekse bygningssystemer. I overensstemmelse med IKT-bekendtgørelsen, ISO 19650 og forsyningssektorstandarder.">Specialized digital delivery for utilities, district heating, underground infrastructure, and complex building systems. Compliant with Danish ICT Order, ISO 19650, and utility sector standards.</p>
+
+                <div class="pills">
+
+                        
+                        <div class="pills">
+                          <span class="hover-wrap">
+                            <span class="pill tool">IKT strategi</span>
+                            <img src="IKT-strategi.png" class="popup-img" />
+                          </span>
+                          <span class="hover-wrap">
+                            <span class="pill tool">IKT specifikation</span>
+                            <img src="IKT specifikations.png" class="popup-img" />
+                          </span>
+                          <span class="hover-wrap">
+                            <span class="pill tool">IKT overholdelse</span>
+                            <img src="IKT audit.png" class="popup-img" />
+                          </span>
+                          <span class="hover-wrap">
+                            <span class="pill tool">3D Scanning</span>
+                            <img src="3D scanning.png" class="popup-img" />
+                          </span>
+                          <span class="hover-wrap">
+                            <span class="pill tool">3D/2D udvikling</span>
+                            <img src="2D-3D udvikling.png" class="popup-img" />
+                          </span>
+                          <span class="hover-wrap">
+                            <span class="pill tool">VDC</span>
+                            <img src="VDC- maskinestyring.png" class="popup-img" />
+                          </span>
+                          <span class="hover-wrap">
+                            <span class="pill tool">Projekt Audit</span>
+                            <img src="Projekt audit.png" class="popup-img" />
+                          </span>
+                          <span class="hover-wrap">
+                            <span class="pill tool">Dalux, ACC, CxPlanner</span>
+                            <img src="Dalux-ACC-Cx.png" class="popup-img" />
+                          </span>
+                        </div>
+                        
+                        <div class="pills">
+                          <span class="hover-wrap">
+                            <span class="pill reg">Molio</span>
+                            <img src="Molio.png" class="popup-img" />
+                          </span>
+                          <span class="hover-wrap">
+                            <span class="pill reg">ISO 19650</span>
+                            <img src="ISO19650.png" class="popup-img" />
+                          </span>
+                          <span class="hover-wrap">
+                            <span class="pill reg">Danish Building Regulations (BR18)</span>
+                            <img src="BR18.png" class="popup-img" />
+                          </span>
+                          <span class="hover-wrap">
+                            <span class="pill reg">Danish Building Authority</span>
+                            <img src="DBA.png" class="popup-img" />
+                          </span>
+                          <span class="hover-wrap">
+                            <span class="pill reg">Sustainability</span>
+                            <img src="Sustainability.png" class="popup-img" />
+                          </span>
+                        </div>
+                        
+
+            </div>
+            <div class="lang-toggle" style="position:absolute; top:20px; right:24px;">
+                <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+                <button class="lang-btn" id="btnDA" onclick="setLang('da')">DA</button>
+              </div>
+        </div>
+    </div>
+
+    <!-- ROLE TABS -->
+    <div class="tabs-outer">
+        <div class="role-tabs">
+            <button class="role-btn active" data-role="bim" 
+                    data-en="BIM & ICT Services" 
+                    data-da="BIM & IKT-tjenester" 
+                    onclick="setRole('bim', this)">BIM & ICT Services</button>
+            <button class="role-btn" data-role="doc" 
+                    data-en="Document Management" 
+                    data-da="Dokumentstyring" 
+                    onclick="setRole('doc', this)">Document Management</button>
+        </div>
+
+        <!-- BIM segment tabs -->
+        <div class="seg-tabs-wrap" id="bim-tabs">
+            <div class="seg-tabs">
+                <button class="tab-btn active" data-tab="utilities" data-role-scope="bim" 
+                        data-en="Utilities & Infrastructure" 
+                        data-da="Forsyning & Infrastruktur">Infrastructure</button>
+                <button class="tab-btn" data-tab="contractors" data-role-scope="bim" 
+                        data-en="Contractors" 
+                        data-da="Entreprenører">Contractors</button>
+                <button class="tab-btn" data-tab="municipalities" data-role-scope="bim" 
+                        data-en="Municipalities" 
+                        data-da="Kommuner">Municipalities</button>
+                <button class="tab-btn" data-tab="consultants" data-role-scope="bim" 
+                        data-en="Consultants" 
+                        data-da="Rådgivere">Consultants</button>
+                <button class="tab-btn" data-tab="pricing" data-role-scope="bim" 
+                        data-en="Pricing" 
+                        data-da="Priser">Pricing</button>
+            </div>
+        </div>
+
+        <!-- DOC segment tabs -->
+        <div class="seg-tabs-wrap" id="doc-tabs" style="display:none">
+            <div class="seg-tabs">
+                <button class="tab-btn active" data-tab="doc-contractors" data-role-scope="doc" 
+                        data-en="Contractors" 
+                        data-da="Entreprenører">Contractors</button>
+                <button class="tab-btn" data-tab="doc-municipalities" data-role-scope="doc" 
+                        data-en="Municipalities" 
+                        data-da="Kommuner">Municipalities</button>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- BIM ROLE PANEL -->
+        <div class="role-panel active" id="panel-bim">
+
+            <!-- UTILITIES & INFRASTRUCTURE -->
+            <div class="seg-view active" id="tab-utilities">
+                <div class="seg-header">
+                    <div class="seg-icon">🔧</div>
+                    <div>
+                        <h2 data-en="Utilities & Infrastructure Companies" 
+                            data-da="Forsyningsselskaber & Infrastruktur">Utilities & Infrastructure Owners</h2>
+                        <div class="seg-tagline" 
+                             data-en="Water, district heating, wastewater, electricity, telecom — underground & above-ground networks"
+                             data-da="Vand, fjernvarme, spildevand, el, tele — nedgravede & overjordiske net">Water, district heating, wastewater, electricity, telecom — underground & above-ground networks</div>
+                        <div class="reg-badge" data-en="Danish Utility Regulator · Civil 3D · Georadar · GIS-BIM" data-da="Forsyningstilsynet · Civil 3D · Georadar · GIS-BIM">Danish Utility Regulator · Civil 3D · Georadar · GIS-BIM</div>
+                    </div>
+                </div>
+
+                <div class="pitch" data-en="Danish utility networks are largely invisible — buried infrastructure under roads, fields, and private land. <strong>Inaccurate or missing as-built records cause dangerous excavations, unplanned outages, and costly emergency repairs.</strong> Civil 3D infrastructure modelling, georadar surveys, and GIS-BIM integration transforms fragmented network records into reliable, spatially accurate operational data."
+                           data-da="Danske forsyningsnet er stort set usynlige — nedgravet infrastruktur under veje, marker og privat grund. <strong>Unøjagtige eller manglende som-bygget-registreringer forårsager farlige udgravninger, uplanlagte afbrydelser og kostbare akutreparationer.</strong> Civil 3D-infrastrukturmodellering, georadar-undersøgelser og GIS-BIM-integration omdanner fragmenterede netværksregistreringer til pålidelige, rumligt nøjagtige driftsdata.">Danish utility networks are largely invisible — buried infrastructure under roads, fields, and private land. <strong>Inaccurate or missing as-built records cause dangerous excavations, unplanned outages, and costly emergency repairs.</strong> Civil 3D infrastructure modelling, georadar surveys, and GIS-BIM integration transforms fragmented network records into reliable, spatially accurate operational data.</div>
+
+                <div class="two-col">
+                    <div class="card">
+                        <div class="card-label pain" data-en="Critical Challenges" data-da="Kritiske udfordringer">Critical Challenges</div>
+                        <ul class="bare">
+                            <li data-en="Underground utility records remain incomplete and fragmented, with many critical assets still based on legacy documentation that cannot be fully trusted." 
+                                data-da="Underjordiske forsyningsregistreringer er fortsat ufuldstændige og fragmenterede, og mange kritiske aktiver er stadig baseret på ældre dokumentation, som man ikke fuldt ud kan stole på.">Underground utility records remain incomplete and fragmented, with many critical assets still based on legacy documentation that cannot be fully trusted.</li>
+                            <li data-en="The absence of integrated GIS and engineering data creates silos and prevents reliable network-wide decision-making.." 
+                                data-da="Fraværet af integrerede GIS- og ingeniørdata skaber siloer og forhindrer pålidelige beslutninger på tværs af hele nettet.">The absence of integrated GIS and engineering data creates silos and prevents reliable network-wide decision-making.</li>
+                            <li data-en="GIS and engineering systems disconnected — no single source of truth for network" 
+                                data-da="GIS og ingeniørsystemer afkoblet — ingen enkelt sandhedskilde for netværk">GIS and engineering systems disconnected — no single source of truth for network</li>
+                            <li data-en="Inconsistent as-built handover standards reduce the value of project data and weaken lifecycle asset management." 
+                                data-da="Uensartede standarder for aflevering af som-udført-dokumentation reducerer værdien af projektdata og svækker asset management gennem hele livscyklussen.">Inconsistent as-built handover standards reduce the value of project data and weaken lifecycle asset management.</li>
+                            <li data-en="Utility expansion projects, especially district heating and cooling, are often delivered without sufficient 3D coordination across adjacent infrastructure networks." 
+                                data-da="Udvidelsesprojekter for forsyningsnet, især fjernvarme og fjernkøling, leveres ofte uden tilstrækkelig 3D‑koordinering på tværs af tilstødende infrastrukturnet.">Utility expansion projects, especially district heating and cooling, are often delivered without sufficient 3D coordination across adjacent infrastructure networks.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label kpi" data-en="Operational KPI's" data-da="Drifts-KPIer">Operational KPIs</div>
+                        <ul class="bare">
+                            <li data-en="Spatial data accuracy across the asset network, measured by the share of assets verified within ±0.5 m tolerance." 
+                                data-da="Rumlige datas nøjagtighed på tværs af asset‑netværket, målt som andelen af aktiver verificeret inden for en tolerance på ±0,5 m.">Spatial data accuracy across the asset network, measured by the share of assets verified within ±0.5 m tolerance.</li>
+                            <li data-en="Excavation strike frequency, expressed as incidents per 1,000 digs." 
+                                data-da="Hyppighed af graveskader, angivet som hændelser pr. 1.000 gravearbejder.">Excavation strike frequency, expressed as incidents per 1,000 digs.</li>
+                            <li data-en="Emergency repair callouts vs planned maintenance" 
+                                data-da="Akutreparationsudkald vs planlagt vedligehold">Emergency repair callouts vs planned maintenance</li>
+                            <li data-en="Field asset retrieval time, measuring how quickly crews can locate assets from GIS data." 
+                                data-da="Tid til lokalisering af aktiver i marken, som måler hvor hurtigt mandskab kan finde aktiver ud fra GIS‑data.">Field asset retrieval time, measuring how quickly crews can locate assets from GIS data.</li>
+                            <li data-en="Capital project data compliance, tracking the proportion of as-built records delivered in the required format and quality." 
+                                data-da="Overholdelse af kapitalprojektdata, hvor der følges op på andelen af som‑udført‑dokumentation, der leveres i det krævede format og den krævede kvalitet.">Capital project data compliance, tracking the proportion of as-built records delivered in the required format and quality.</li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                  
+                    
+                    
+                    <div class="chips">
+                    
+                      <div class="chip" data-link="C:\Users\DK1H1Y\Desktop\IKT sales\10028 GA-tegninger G4A.pdf"
+                                        data-en="3D pipe network modelling (district heating, water, sewer)"
+                                        data-da="3D-rørnetværksmodellering (fjernvarme, vand, kloak)">
+                        3D pipe network modelling
+                        <div class="popup">
+                          <div class="popup-icon">🔧</div>
+                          <div class="popup-title" data-en="3D Pipe Network Design" data-da="3D-rørnetværksdesign">3D Pipe Network Design</div>
+                          <div data-en="Accurate underground utility modelling with pipe slopes, invert elevations, manholes, and valve chambers in Civil 3D for construction and GIS handover."
+                               data-da="Nøjagtig underjordisk forsyningsmodellering med rørfald, bundkoter, brønde og ventilkamre i Civil 3D til bygning og GIS-aflevering.">
+                            Accurate underground utility modelling with pipe slopes, invert elevations, manholes, and valve chambers in Civil 3D for construction and GIS handover.
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <div class="chip" data-link=""
+                                        data-en="Georadar (GPR) surveys — buried infrastructure detection"
+                                        data-da="Georadar (GPR)-undersøgelser — nedgravet infrastrukturdetektion">
+                        Georadar (GPR) surveys
+                        <div class="popup">
+                          <div class="popup-icon">📡</div>
+                          <div class="popup-title" data-en="Ground Penetrating Radar" data-da="Georadar">Ground Penetrating Radar</div>
+                          <div data-en="Non-invasive detection of buried pipes, cables, and voids before excavation to prevent strikes and ensure safe construction."
+                               data-da="Ikke-invasiv detektion af nedgravede rør, kabler og hulrum inden udgravning for at forhindre skader og sikre sikker bygning.">
+                            Non-invasive detection of buried pipes, cables, and voids before excavation to prevent strikes and ensure safe construction.
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <div class="chip" data-link="presentation-gis-bim.pdf"
+                                        data-en="GIS-BIM integration — spatial data synchronization"
+                                        data-da="GIS-BIM-integration — rumlig datasynchronisering">
+                        GIS-BIM integration
+                        <div class="popup">
+                          <div class="popup-icon">🗺️</div>
+                          <div class="popup-title" data-en="GIS-BIM Data Sync" data-da="GIS-BIM-datasynkronisering">GIS-BIM Data Sync</div>
+                          <div data-en="Linking Civil 3D engineering models with municipal GIS for unified operational network data accessible to field crews and planners."
+                               data-da="Kobling af Civil 3D-ingeniørmodeller med kommunal GIS for samlet operationel netværksdata tilgængelig for feltpersonale og planlæggere.">
+                            Linking Civil 3D engineering models with municipal GIS for unified operational network data accessible to field crews and planners.
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <div class="chip" data-link="presentation-machine-design.pdf"
+                                        data-en="Machine design: trench profiles & GPS export for excavators"
+                                        data-da="Maskindesign: graveprofiler & GPS-eksport til gravemaskiner">
+                        Machine design excavation profiles
+                        <div class="popup">
+                          <div class="popup-icon">🚜</div>
+                          <div class="popup-title" data-en="GPS Machine Control" data-da="GPS maskinstyring">GPS Machine Control</div>
+                          <div data-en="Precise excavation depths and trench alignments exported to GPS-guided machinery, reducing over-dig and material waste."
+                               data-da="Præcise udgravningsdybder og gravetracéer eksporteret til GPS-styrede maskiner, reducerer overudgravning og materialespild.">
+                            Precise excavation depths and trench alignments exported to GPS-guided machinery, reducing over-dig and material waste.
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <div class="chip" data-link="presentation-clash-detection.pdf"
+                                        data-en="Navisworks clash detection — multi-utility coordination"
+                                        data-da="Navisworks kollisionskontrol — flerforssyningskoordinering">
+                        Multi-disciplinary clash detection
+                        <div class="popup">
+                          <div class="popup-icon">⚠️</div>
+                          <div class="popup-title" data-en="Utility Clash Prevention" data-da="Forsyningssammenstød-forebyggelse">Utility Clash Prevention</div>
+                          <div data-en="Detecting conflicts between water, heating, sewer, power, telecom networks before construction to avoid costly rework."
+                               data-da="Detektering af konflikter mellem vand-, varme-, kloak-, el-, teleledningsnet inden bygning for at undgå kostbare omprojekteringer.">
+                            Detecting conflicts between water, heating, sewer, power, telecom networks before construction to avoid costly rework.
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <div class="chip" data-link="presentation-ict-compliance.pdf"
+                                        data-en="ICT Order (EIR) for capital projects — as-built data standards"
+                                        data-da="IKT-bekendtgørelsen (EIR) for anlægsprojekter — som-bygget-datastandarder">
+                        ICT compliance
+                        <div class="popup">
+                          <div class="popup-icon">📋</div>
+                          <div class="popup-title" data-en="Danish ICT Order Compliance" data-da="IKT-bekendtgørelsen compliance">Danish ICT Order Compliance</div>
+                          <div data-en="Ensuring contractor deliverables meet Danish ICT requirements for accuracy, format, and data completeness in network as-built records."
+                               data-da="Sikring af entreprenørleverancer opfylder IKT-krav for nøjagtighed, format og datakomplethed i netværks som-bygget-registreringer.">
+                            Ensuring contractor deliverables meet Danish ICT requirements for accuracy, format, and data completeness in network as-built records.
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <div class="chip" data-link="presentation-asset-register.pdf"
+                                        data-en="Asset register setup — network maintenance planning"
+                                        data-da="Aktivregister-opsætning — netværksvedligeholdelsesplanlægning">
+                        Asset register & maintenance planning
+                        <div class="popup">
+                          <div class="popup-icon">📊</div>
+                          <div class="popup-title" data-en="Asset Data Management" data-da="Aktivdatastyring">Asset Data Management</div>
+                          <div data-en="Structured asset register with condition, age, and criticality data for predictive maintenance and capital planning."
+                               data-da="Struktureret aktivregister med tilstands-, alders- og kritikalitetsdata til prædiktiv vedligehold og kapitalplanlægning.">
+                            Structured asset register with condition, age, and criticality data for predictive maintenance and capital planning.
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <div class="chip" data-link="presentation-regulatory.pdf"
+                                        data-en="Regulatory reporting"
+                                        data-da="Regulatorisk rapportering: Forsyningstilsynet datastrukturer">
+                        Regulatory reporting
+                        <div class="popup">
+                          <div class="popup-icon">🏛️</div>
+                          <div class="popup-title" data-en="Utility Regulator Reporting" data-da="Forsyningstilsynet rapportering">Utility Regulator Reporting</div>
+                          <div data-en="Structured data extraction for Danish utility regulator reporting requirements from network models."
+                               data-da="Struktureret dataudtrækning til danske forsyningstilsynets rapporteringskrav fra netværksmodeller.">
+                            Structured data extraction for Danish utility regulator reporting requirements from network models.
+                          </div>
+                        </div>
+                      </div>
+                    
+                    </div>
+
+                <div class="section-label" data-en="Business Value" data-da="Forretningsværdi">Business Value</div>
+                <ul class="benefits-list">
+                    <li data-en="<strong>Early-stage georadar (GPR) surveys</strong> provide verified identification and confidence classification of buried infrastructure prior to excavation, reducing utility strikes, service outages, safety incidents, and associated contractor claims, while establishing a reliable subsurface data foundation for future projects."
+                        data-da="<strong>Tidlig georadar (GPR)-undersøgelse</strong> leverer verificeret identifikation og klassificering af nedgravet infrastruktur inden udgravning, reducerer ledningsskader, serviceafbrydelser, sikkerhedshændelser og tilknyttede entreprenørkrav, og etablerer et pålideligt underjordisk datagrundlag for fremtidige projekter."><strong>Early-stage georadar (GPR) surveys</strong> provide verified identification and confidence classification of buried infrastructure prior to excavation, reducing utility strikes, service outages, safety incidents, and associated contractor claims, while establishing a reliable subsurface data foundation for future projects.</li>
+
+                    <li data-en="<strong>Standardised Civil 3D machine-control design profiles</strong>, delivered in accordance with defined ICT requirements, provide contractors with GPS-ready excavation models that reduce over-excavation, minimize material waste, and lower reinstatement and remediation costs, while ensuring consistent execution across capital projects."
+                        data-da="<strong>Standardiserede Civil 3D maskinstyringsprofiler</strong>, leveret i overensstemmelse med definerede IKT-krav, giver entreprenører GPS-klar udgravningsmodeller der reducerer overudgravning, minimerer materialespild og sænker genopretnings- og afhjælpningsomkostninger, og sikrer konsistent udførelse på tværs af anlægsprojekter."><strong>Standardised Civil 3D machine-control design profiles</strong>, delivered in accordance with defined ICT requirements, provide contractors with GPS-ready excavation models that reduce over-excavation, minimize material waste, and lower reinstatement and remediation costs, while ensuring consistent execution across capital projects.</li>
+
+                    <li data-en="<strong>Integrated GIS–BIM information management</strong> creates a single, authoritative and spatially accurate network model, enabling seamless data sharing between planners, designers, contractors, and field crews, improving coordination, reducing response times during incidents, and supporting efficient operations and maintenance."
+                        data-da="<strong>Integreret GIS–BIM informationsstyring</strong> skaber én autoritativ og rumligt nøjagtig netværksmodel, der muliggør problemfri datadeling mellem planlæggere, designere, entreprenører og feltpersonale, forbedrer koordinering, reducerer responstider under hændelser og understøtter effektiv drift og vedligeholdelse."><strong>Integrated GIS–BIM information management</strong> creates a single, authoritative and spatially accurate network model, enabling seamless data sharing between planners, designers, contractors, and field crews, improving coordination, reducing response times during incidents, and supporting efficient operations and maintenance.</li>
+
+                    <li data-en="<strong>Compliance with the ICT Order and Employer's Information Requirements (EIR)</strong> ensures that contractors deliver validated, standardized, and complete as-built data, safeguarding long-term network record quality, enabling data reuse across systems, and preserving the digital asset value of the infrastructure portfolio."
+                        data-da="<strong>Overholdelse af IKT-bekendtgørelsen og bygherrens informationskrav (EIR)</strong> sikrer, at entreprenører leverer validerede, standardiserede og komplette som-bygget-data, beskytter langsigtet netværksregistreringskvalitet, muliggør genbrug af data på tværs af systemer og bevarer den digitale aktivværdi af infrastrukturporteføljen."><strong>Compliance with the ICT Order (IKT-bekendtgørelsen) and Employer's Information Requirements (EIR)</strong> ensures that contractors deliver validated, standardized, and complete as-built data, safeguarding long-term network record quality, enabling data reuse across systems, and preserving the digital asset value of the infrastructure portfolio.</li>
+
+                    <li data-en="<strong>Clear data governance, validation rules, and handover processes</strong> embedded in ICT requirements define ownership, quality thresholds, and acceptance criteria for project data, ensuring that information delivered at project close-out is fit for purpose and operationally reliable."
+                        data-da="<strong>Tydelig datastyring, valideringsregler og afleveringsprocesser</strong> indlejret i IKT-krav definerer ejerskab, kvalitetstærskler og acceptkriterier for projektdata, og sikrer at information leveret ved projektafslutning er formålstjenlig og driftsmæssigt pålidelig."><strong>Clear data governance, validation rules, and handover processes</strong> embedded in ICT requirements define ownership, quality thresholds, and acceptance criteria for project data, ensuring that information delivered at project close-out is fit for purpose and operationally reliable.</li>
+
+                    <li data-en="<strong>Alignment of project information deliverables with operational systems</strong> (GIS, asset management, maintenance, and incident management) ensures that data produced during capital projects directly supports day-to-day operations, reduces lifecycle costs, and enables future initiatives such as digital twins, predictive maintenance, and data-driven planning."
+                        data-da="<strong>Tilpasning af projektinformationsleverancer til driftssystemer</strong> (GIS, aktivforvaltning, vedligeholdelse og hændelsesstyring) sikrer, at data produceret under anlægsprojekter direkte understøtter daglig drift, reducerer livscyklusomkostninger og muliggør fremtidige initiativer som digitale tvillinger, prædiktiv vedligeholdelse og datadrevet planlægning."><strong>Alignment of project information deliverables with operational systems</strong> (GIS, asset management, maintenance, and incident management) ensures that data produced during capital projects directly supports day-to-day operations, reduces lifecycle costs, and enables future initiatives such as digital twins, predictive maintenance, and data-driven planning.</li>
+                </ul>
+            </div>
+
+            <!-- CONTRACTORS -->
+            <div class="seg-view" id="tab-contractors">
+                <div class="seg-header">
+                    <div class="seg-icon">🏗️</div>
+                    <div>
+                        <h2 data-en="Contractors" data-da="Entreprenører">Contractors</h2>
+                        <div class="seg-tagline" data-en="General contractors, MEP specialists, turnkey builders"
+                                                   data-da="Hovedentreprenører, VVS-specialister, totalentreprenører">General contractors, MEP specialists, turnkey builders</div>
+                        <div class="reg-badge" data-en="ICT Order · EIR · Dalux Field" data-da="IKT-bekendtgørelsen · EIR · Dalux Field">ICT Order · EIR · Dalux Field</div>
+                    </div>
+                </div>
+
+                <div class="pitch" data-en="Contractors face mandatory ICT Order compliance obligations from contract signature, yet most operate without a dedicated BIM or ICT lead — creating delivery risk, uncertainty in interpretation, and dependence on external expertise. <strong>Clashes discovered after subcontractor procurement, site teams on superseded drawings, and handover packages failing client audits</strong> are the direct consequences. On-demand BIM &amp; ICT expertise covers the full delivery chain — from tender coordination through verified digital handover."
+                           data-da="Entreprenører er underlagt obligatorisk IKT-bekendtgørelsens overholdelseskrav fra kontraktunderskrift, men de fleste opererer uden en dedikeret BIM- eller IKT-leder — hvilket skaber leverancerisici, fortolkningsusikkerhed og afhængighed af ekstern ekspertise. <strong>Sammenstød opdaget efter underentrepriseindgåelse, pladsteams på forældede tegninger og afleveringspakker der fejler kunderevisioner</strong> er de direkte konsekvenser. BIM- og IKT-ekspertise efter behov dækker hele leverancekæden — fra udbudskoordinering til verificeret digital aflevering.">Contractors face mandatory ICT Order (IKT-bekendtgørelsen) compliance obligations from contract signature, yet most operate without a dedicated BIM or ICT lead — creating delivery risk, uncertainty in interpretation, and dependence on external expertise. <strong>Clashes discovered after subcontractor procurement, site teams on superseded drawings, and handover packages failing client audits</strong> are the direct consequences. On-demand BIM &amp; ICT expertise covers the full delivery chain — from tender coordination through verified digital handover.</div>
+
+                <div class="two-col">
+                    <div class="card">
+                        <div class="card-label pain" data-en="Specific Pain Points" data-da="Specifikke udfordringer">Specific Pain Points</div>
+                        <ul class="bare">
+                            <li data-en="Mandatory ICT Order compliance without an in-house BIM or ICT lead — creating delivery risk, interpretation uncertainty, and increased reliance on external consultants."
+                                data-da="Obligatorisk IKT-bekendtgørelsen compliance uden intern BIM- eller IKT-leder — skaber leverancerisici, fortolkningsusikkerhed og øget afhængighed af eksterne konsulenter.">Mandatory ICT Order compliance without an in-house BIM or ICT lead — creating delivery risk, interpretation uncertainty, and increased reliance on external consultants.</li>
+                            <li data-en="Clash detection performed too late in the project lifecycle, often after subcontractor procurement, resulting in change orders, delays, and avoidable rework on site."
+                                data-da="Kollisionskontrol udført for sent i projektforløbet, ofte efter underentrepriseindgåelse, med ændringsordrer, forsinkelser og undgåelig omprojektering til følge.">Clash detection performed too late in the project lifecycle, often after subcontractor procurement, resulting in change orders, delays, and avoidable rework on site.</li>
+                            <li data-en="Site teams working from outdated or superseded drawings, leading to construction errors, RFIs, and loss of confidence in project information."
+                                data-da="Pladsteams arbejder fra forældede eller erstattet tegninger, hvilket fører til byggefejl, RFIer og tab af tillid til projektinformation.">Site teams working from outdated or superseded drawings, leading to construction errors, RFIs, and loss of confidence in project information.</li>
+                            <li data-en="Manual quantity take-offs from 2D drawings during tendering, increasing pricing uncertainty, contingency loading, and exposure to cost overruns."
+                                data-da="Manuelle mængdeudtræk fra 2D-tegninger under udbud øger prissætningsusikkerhed, reservebelastning og eksponering for budgetoverskridelser.">Manual quantity take-offs from 2D drawings during tendering, increasing pricing uncertainty, contingency loading, and exposure to cost overruns.</li>
+                            <li data-en="Inconsistent setup and use of Dalux Field, resulting in fragmented QA/QC documentation that does not meet handover or ICT Order requirements."
+                                data-da="Inkonsistent opsætning og brug af Dalux Field resulterer i fragmenteret KS-dokumentation der ikke opfylder afleverings- eller IKT-bekendtgørelseskrav.">Inconsistent setup and use of Dalux Field, resulting in fragmented QA/QC documentation that does not meet handover or ICT Order requirements.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label kpi" data-en="Key Performance Metrics" data-da="Nøglepræstationsindikatorer">Key Performance Metrics</div>
+                        <ul class="bare">
+                            <li data-en="Cost variance against tender price — measuring commercial predictability and margin protection."
+                                data-da="Omkostningsafvigelse ift. tilbudspris — måler kommerciel forudsigelighed og marginbeskyttelse.">Cost variance against tender price — measuring commercial predictability and margin protection.</li>
+                            <li data-en="Number of clashes identified and resolved prior to site mobilisation — indicating design maturity and coordination effectiveness."
+                                data-da="Antal kollisioner identificeret og løst inden byggemobilisering — indikerer designmodenhed og koordineringseffektivitet.">Number of clashes identified and resolved prior to site mobilisation — indicating design maturity and coordination effectiveness.</li>
+                            <li data-en="RFI volume and average response time — reflecting information quality and project communication efficiency."
+                                data-da="Antal RFIer og gennemsnitlig svartid — afspejler informationskvalitet og projektkommunikationseffektivitet.">RFI volume and average response time — reflecting information quality and project communication efficiency.</li>
+                            <li data-en="Rework hours and associated cost (DKK per m²) — capturing the direct impact of coordination and information issues on site productivity."
+                                data-da="Omprojekteringstimer og tilhørende omkostninger (kr. pr. m²) — registrerer den direkte indvirkning af koordinerings- og informationsproblemer på pladsproduktiviteten.">Rework hours and associated cost (DKK per m²) — capturing the direct impact of coordination and information issues on site productivity.</li>
+                            <li data-en="ICT Order compliance score at handover — assessing the completeness, quality, and usability of delivered project information."
+                                data-da="IKT-bekendtgørelsens compliance-score ved aflevering — vurderer fuldstændighed, kvalitet og anvendelighed af leveret projektinformation.">ICT Order compliance score at handover — assessing the completeness, quality, and usability of delivered project information.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label" data-en="Service Deliverables" data-da="Serviceydelser">Service Deliverables</div>
+                <div class="chips">
+                    <div class="chip" data-en="BIM Execution Plan (BEP) tailored to EIR" data-da="BIM-udførelsesplan (BEP) tilpasset IKT-krav">
+                        BIM Execution Plan (BEP)
+                        <div class="popup">
+                            <div class="popup-icon">📘</div>
+                            <div class="popup-title" data-en="Project BEP Development" data-da="Projekt-BEP udvikling">Project BEP Development</div>
+                            <div data-en="Contractor-specific BIM Execution Plan aligned with client EIR and ICT Order requirements, covering roles, processes, and deliverables."
+                                 data-da="Entreprenør-specifik BIM-udførelsesplan tilpasset kunde-EIR og IKT-bekendtgørelsen, dækkende roller, processer og leverancer.">Contractor-specific BIM Execution Plan aligned with client EIR and ICT Order requirements, covering roles, processes, and deliverables.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Multidisciplinary clash detection — architecture, structure, MEP" data-da="Flerfaglig kollisionskontrol — arkitektur, konstruktion, VVS">
+                        Multidisciplinary clash detection
+                        <div class="popup">
+                            <div class="popup-icon">🔍</div>
+                            <div class="popup-title" data-en="Multidisciplinary Clash Detection" data-da="Flerfaglig kollisionskontrol">Multidisciplinary Clash Detection</div>
+                            <div data-en="Systematic clash detection across architecture, structure, and MEP disciplines with prioritized BCF issue tracking and resolution before subcontractor procurement."
+                                 data-da="Systematisk kollisionskontrol på tværs af arkitektur-, konstruktions- og VVS-discipliner med prioriteret BCF-issue-tracking og løsning inden underentrepriseindgåelse.">Systematic clash detection across architecture, structure, and MEP disciplines with prioritized BCF issue tracking and resolution before subcontractor procurement.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="4D construction sequencing & site logistics models" data-da="4D byggesekvensering og logistikmodeller">
+                        4D construction sequencing
+                        <div class="popup">
+                            <div class="popup-icon">📅</div>
+                            <div class="popup-title" data-en="Time-Linked 3D Models" data-da="Tidslænkede 3D-modeller">Time-Linked 3D Models</div>
+                            <div data-en="Linking construction schedules to 3D models for visual sequencing, logistics planning, and program validation."
+                                 data-da="Kobling af byggeprogrammer til 3D-modeller for visuel sekvensering, logistikplanlægning og programvalidering.">Linking construction schedules to 3D models for visual sequencing, logistics planning, and program validation.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Model-based quantity take-offs for tender and cost planning" data-da="Modelbaseret mængdeudtræk til udbud og omkostningsplanlægning">
+                        Model-based quantity take-offs
+                        <div class="popup">
+                            <div class="popup-icon">🔢</div>
+                            <div class="popup-title" data-en="Automated QTO from Model" data-da="Automatiseret mængdeudtræk fra model">Automated QTO from Model</div>
+                            <div data-en="Accurate quantities extracted directly from 3D models, reducing tender preparation time, improving cost certainty, and reducing the risk of under-pricing complex work packages."
+                                 data-da="Nøjagtige mængder udtrukket direkte fra 3D-modeller, reducerer udbudsforberedelsestid, forbedrer omkostningssikkerhed og reducerer risikoen for fejlprisstning af komplekse entreprisepakker.">Accurate quantities extracted directly from 3D models, reducing tender preparation time, improving cost certainty, and reducing the risk of under-pricing complex work packages.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Dalux Field & TM setup, workflow design, site training" data-da="Dalux Field og TM-opsætning, arbejdsgangsdesign og pladstræning">
+                        Dalux Field configuration
+                        <div class="popup">
+                            <div class="popup-icon">📱</div>
+                            <div class="popup-title" data-en="Site QA System Setup" data-da="Plads-KS systemopsætning">Site QA System Setup</div>
+                            <div data-en="Configuring Dalux Field for site inspections, checklists, and Task Management with handover-ready QA documentation meeting ICT Order requirements."
+                                 data-da="Konfigurering af Dalux Field til pladsinspektion, tjeklister og Task Management med afleveringsklar KS-dokumentation der opfylder IKT-bekendtgørelseskrav.">Configuring Dalux Field for site inspections, checklists, and Task Management with handover-ready QA documentation meeting ICT Order requirements.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Subcontractor BIM coordination & model QA" data-da="BIM-koordinering med underentreprenører og modelkvalitetssikring">
+                        Subcontractor BIM coordination
+                        <div class="popup">
+                            <div class="popup-icon">🤝</div>
+                            <div class="popup-title" data-en="Multi-Party Model Coordination" data-da="Flerparters modelkoordinering">Multi-Party Model Coordination</div>
+                            <div data-en="Coordinating MEP, structural, and architectural models from multiple subcontractors with regular clash and QA reviews."
+                                 data-da="Koordinering af VVS-, konstruktions- og arkitektmodeller fra flere underentreprenører med regelmæssige kollisions- og KS-reviews.">Coordinating MEP, structural, and architectural models from multiple subcontractors with regular clash and QA reviews.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="3D laser scanning for as-built verification vs. design" data-da="3D-laserscanning til som-bygget-verifikation mod design">
+                        3D laser scanning as-built verification
+                        <div class="popup">
+                            <div class="popup-icon">📐</div>
+                            <div class="popup-title" data-en="As-Built vs Design Comparison" data-da="Som-bygget vs design sammenligning">As-Built vs Design Comparison</div>
+                            <div data-en="3D scanning of completed works compared against design models to verify dimensional accuracy, support dispute resolution, and ensure reliable long-term asset records."
+                                 data-da="3D-scanning af udførte arbejder sammenlignet med designmodeller for at verificere dimensionel nøjagtighed, støtte tvistafklaring og sikre pålidelige langsigtede aktivregistreringer.">3D scanning of completed works compared against design models to verify dimensional accuracy, support dispute resolution, and ensure reliable long-term asset records.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Digital handover package: COBie, Dalux FM" data-da="Digital afleveringspakke: COBie, Dalux FM">
+                        Digital handover package
+                        <div class="popup">
+                            <div class="popup-icon">📦</div>
+                            <div class="popup-title" data-en="Structured FM Handover" data-da="Struktureret FM-aflevering">Structured FM Handover</div>
+                            <div data-en="Verified asset data in COBie format, populated Dalux FM, and structured O&amp;M documentation meeting ICT Order requirements."
+                                 data-da="Verificeret aktivdata i COBie-format, populeret Dalux FM og struktureret O&amp;M-dokumentation der opfylder IKT-krav.">Verified asset data in COBie format, populated Dalux FM, and structured O&amp;M documentation meeting ICT Order requirements.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-label" data-en="Client Benefits" data-da="Klientfordele">Client Benefits</div>
+                <ul class="benefits-list">
+                    <li data-en="<strong>Early multidisciplinary clash detection completed before subcontractor procurement</strong> reduces the most expensive category of on-site rework and minimizes delays, variations, and dispute risk."
+                        data-da="<strong>Tidlig flerfaglig kollisionskontrol afsluttet inden underentrepriseindgåelse</strong> reducerer den dyreste kategori af omprojektering på pladsen og minimerer forsinkelser, variationer og tvistrisiko."><strong>Early multidisciplinary clash detection completed before subcontractor procurement</strong> reduces the most expensive category of on-site rework and minimizes delays, variations, and dispute risk.</li>
+
+                    <li data-en="<strong>Automated, model-based quantity take-offs</strong> shorten tender preparation timelines, improve cost certainty, and reduce the risk of under-pricing complex or high-risk work packages."
+                        data-da="<strong>Automatiserede, modelbaserede mængdeudtræk</strong> forkorter udbudsforberedelsestidslinjer, forbedrer omkostningssikkerhed og reducerer risikoen for fejlprisstning af komplekse eller højrisikoentreprisepakker."><strong>Automated, model-based quantity take-offs</strong> shorten tender preparation timelines, improve cost certainty, and reduce the risk of under-pricing complex or high-risk work packages.</li>
+
+                    <li data-en="<strong>3D laser scanning of completed works provides defensible, millimetre-accurate as-built documentation</strong>, strengthening the client's position in dispute resolution and ensuring reliable long-term asset records."
+                        data-da="<strong>3D-laserscanning af udførte arbejder leverer forsvarlig, millimeterpræcis som-bygget-dokumentation</strong>, styrker kundens position i tvistafklaring og sikrer pålidelige langsigtede aktivregistreringer."><strong>3D laser scanning of completed works provides defensible, millimetre-accurate as-built documentation</strong>, strengthening the client's position in dispute resolution and ensuring reliable long-term asset records.</li>
+
+                    <li data-en="<strong>Consistent and correctly governed setup of digital site quality processes from day one</strong> ensures QA/QC records are complete, structured, and fully usable at handover, eliminating last-minute data remediation and project close-out delays."
+                        data-da="<strong>Konsistent og korrekt styret opsætning af digitale pladskvalitetsprocesser fra dag ét</strong> sikrer at KS-registreringer er komplette, strukturerede og fuldt anvendelige ved aflevering, eliminerer eleventh-hour-dataudbedring og forsinkelser ved projektafslutning."><strong>Consistent and correctly governed setup of digital site quality processes from day one</strong> ensures QA/QC records are complete, structured, and fully usable at handover, eliminating last-minute data remediation and project close-out delays.</li>
+                </ul>
+            </div>
+
+            <!-- MUNICIPALITIES -->
+            <div class="seg-view" id="tab-municipalities">
+                <div class="seg-header">
+                    <div class="seg-icon">🏛️</div>
+                    <div>
+                        <h2 data-en="Municipalities" data-da="Kommuner">Municipalities</h2>
+                        <div class="seg-tagline" data-en="Schools, care homes, roads, sports facilities, public infrastructure"
+                                                   data-da="Skoler, plejehjem, veje, idrætsanlæg, offentlig infrastruktur">Schools, care homes, roads, sports facilities, public infrastructure</div>
+                        <div class="reg-badge" data-en="ICT Order · Danish Building Authority · GIS-BIM · Civil 3D" data-da="IKT-bekendtgørelsen · Bygningsstyrelsen · GIS-BIM · Civil 3D">ICT Order · Danish Building Authority · GIS-BIM · Civil 3D</div>
+                    </div>
+                </div>
+
+                <div class="pitch" data-en="Municipalities are Denmark's largest public building clients — legally obligated to comply with the ICT Order on state-subsidized projects, yet procurement teams rarely have technical competence to write enforceable requirements or evaluate contractor deliverables. <strong>The gap between legal requirements and what ends up in the asset register is enormous.</strong> BIM &amp; ICT advisory closes that gap from both sides — procurement and delivery."
+                           data-da="Kommuner er Danmarks største offentlige bygherrer — lovmæssigt forpligtet til at overholde IKT-bekendtgørelsen på statsstøttede projekter, men udbudsteams har sjældent teknisk kompetence til at formulere håndhævbare krav eller vurdere entreprenørleverancer. <strong>Kløften mellem lovkrav og det der ender i aktivregistret er enorm.</strong> BIM- og IKT-rådgivning lukker denne kløft fra begge sider — udbud og udførelse.">Municipalities are Denmark's largest public building clients — legally obligated to comply with the ICT Order (IKT-bekendtgørelsen) on state-subsidized projects, yet procurement teams rarely have technical competence to write enforceable requirements or evaluate contractor deliverables. <strong>The gap between legal requirements and what ends up in the asset register is enormous.</strong> BIM &amp; ICT advisory closes that gap from both sides — procurement and delivery.</div>
+
+                <div class="two-col">
+                    <div class="card">
+                        <div class="card-label pain" data-en="Municipality-Specific Pain Points" data-da="Kommunespecifikke udfordringer">Municipality-Specific Pain Points</div>
+                        <ul class="bare">
+                            <li data-en="Employer's Information Requirements (EIR) reused from generic templates without effective enforcement, validation, or audit mechanisms, resulting in non-compliant project deliveries and limited data usability at handover."
+                                data-da="Bygherrens informationskrav (EIR) genbrugt fra generiske skabeloner uden effektive håndhævelses-, validerings- eller revisionsmekanismer, hvilket resulterer i ikke-compliant projektleverancer og begrænset dataanvendelighed ved aflevering.">Employer's Information Requirements (EIR) reused from generic templates without effective enforcement, validation, or audit mechanisms, resulting in non-compliant project deliveries and limited data usability at handover.</li>
+                            <li data-en="GIS and BIM systems operating in silos across municipal departments (planning, roads, utilities, buildings, operations), preventing a shared understanding of assets and increasing coordination effort and decision-making risk."
+                                data-da="GIS- og BIM-systemer der opererer i siloer på tværs af kommunale afdelinger (planlægning, veje, forsyning, bygninger, drift), forhindrer en fælles forståelse af aktiver og øger koordineringsindsats og beslutningsrisiko.">GIS and BIM systems operating in silos across municipal departments (planning, roads, utilities, buildings, operations), preventing a shared understanding of assets and increasing coordination effort and decision-making risk.</li>
+                            <li data-en="Inconsistent asset data quality across the municipal portfolio, with varying levels of completeness, accuracy, and structure depending on project, contractor, or delivery year."
+                                data-da="Inkonsistent aktivdatakvalitet i den kommunale portefølje, med varierende niveauer af fuldstændighed, nøjagtighed og struktur afhængigt af projekt, entreprenør eller leveringsår.">Inconsistent asset data quality across the municipal portfolio, with varying levels of completeness, accuracy, and structure depending on project, contractor, or delivery year.</li>
+                            <li data-en="Lack of municipal standards for digital documentation of buildings and infrastructure, leading to fragmented data formats, unclear ownership, and limited reuse of information across projects and lifecycle stages."
+                                data-da="Mangel på kommunale standarder for digital dokumentation af bygninger og infrastruktur fører til fragmenterede dataformater, uklart ejerskab og begrænset genbrug af information på tværs af projekter og livscyklusfaser.">Lack of municipal standards for digital documentation of buildings and infrastructure, leading to fragmented data formats, unclear ownership, and limited reuse of information across projects and lifecycle stages.</li>
+                            <li data-en="Inaccurate or incomplete mapping of underground infrastructure (pipes, cables, and ducts), increasing the risk of utility strikes, service disruptions, safety incidents, and unplanned maintenance costs."
+                                data-da="Unøjagtig eller ufuldstændig kortlægning af underjordisk infrastruktur (rør, kabler og kanaler) øger risikoen for ledningsskader, serviceafbrydelser, sikkerhedshændelser og uplanlagte vedligeholdelsesomkostninger.">Inaccurate or incomplete mapping of underground infrastructure (pipes, cables, and ducts), increasing the risk of utility strikes, service disruptions, safety incidents, and unplanned maintenance costs.</li>
+                            <li data-en="Limited linkage between capital project data and operational systems, meaning valuable project information is not effectively transferred to maintenance, permitting, and asset management workflows."
+                                data-da="Begrænset kobling mellem anlægsprojektdata og driftssystemer betyder, at værdifuld projektinformation ikke effektivt overføres til vedligeholdelses-, tilladelsesgivnings- og aktivforvaltningsprocesser.">Limited linkage between capital project data and operational systems, meaning valuable project information is not effectively transferred to maintenance, permitting, and asset management workflows.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label kpi" data-en="Key Municipal Performance Metrics" data-da="Kommunale nøglepræstationsindikatorer">Key Municipal Performance Metrics</div>
+                        <ul class="bare">
+                            <li data-en="Percentage of projects compliant with the ICT Order at audited handover, demonstrating regulatory compliance and effectiveness of information governance."
+                                data-da="Andel af projekter compliant med IKT-bekendtgørelsen ved revideret aflevering, der demonstrerer regulatorisk overholdelse og effektiviteten af informationsstyring.">Percentage of projects compliant with the ICT Order (IKT-bekendtgørelsen) at audited handover, demonstrating regulatory compliance and effectiveness of information governance.</li>
+                            <li data-en="Asset data completeness and consistency across the municipal portfolio, measured by defined data standards, attribute coverage, and spatial accuracy thresholds."
+                                data-da="Aktivdatakomplethed og -konsistens i den kommunale portefølje, målt ved definerede datastandarder, attributdækning og rumlige præcisionstærskler.">Asset data completeness and consistency across the municipal portfolio, measured by defined data standards, attribute coverage, and spatial accuracy thresholds.</li>
+                            <li data-en="Budget and schedule adherence on capital projects, reflecting improved predictability enabled by better information management and coordination."
+                                data-da="Budget- og tidsplanoverholdelse på anlægsprojekter, der afspejler forbedret forudsigelighed muliggjort af bedre informationsstyring og koordinering.">Budget and schedule adherence on capital projects, reflecting improved predictability enabled by better information management and coordination.</li>
+                            <li data-en="Spatial accuracy of underground infrastructure records in GIS, including confidence levels for pipes, cables, and ducts, supporting safer excavation and planning activities."
+                                data-da="Rumlig præcision af underjordiske infrastrukturregistreringer i GIS, herunder tillidsniveauer for rør, kabler og kanaler, der understøtter sikrere udgravnings- og planlægningsaktiviteter.">Spatial accuracy of underground infrastructure records in GIS, including confidence levels for pipes, cables, and ducts, supporting safer excavation and planning activities.</li>
+                            <li data-en="Annual reduction in maintenance backlog (DKK/year) attributable to improved asset information, prioritised interventions, and data-driven maintenance planning."
+                                data-da="Årlig reduktion af vedligeholdelsesefterslæb (kr./år) der kan tilskrives forbedret aktivinformation, prioriterede indgreb og datadrevet vedligeholdelsesplanlægning.">Annual reduction in maintenance backlog (DKK/year) attributable to improved asset information, prioritised interventions, and data-driven maintenance planning.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label" data-en="Service Deliverables" data-da="Serviceydelser">Service Deliverables</div>
+                <div class="chips">
+                    <div class="chip" data-en="Enforceable EIR documents — not just templates" data-da="Håndhævbare EIR-dokumenter — ikke blot skabeloner">
+                        <span data-en="Enforceable EIR documents" data-da="Håndhævbare EIR-dokumenter">Enforceable EIR documents</span>
+                        <div class="popup">
+                            <div class="popup-icon">⚖️</div>
+                            <div class="popup-title" data-en="Legally Enforceable Requirements" data-da="Juridisk håndhævbare krav">Legally Enforceable Requirements</div>
+                            <div data-en="EIR tailored to project needs with verifiable acceptance criteria aligned with ICT Order, not generic templates."
+                                 data-da="EIR skræddersyet til projektbehov med verificerbare acceptkriterier tilpasset IKT-bekendtgørelsen, ikke generiske skabeloner.">EIR tailored to project needs with verifiable acceptance criteria aligned with ICT Order, not generic templates.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Municipal ICT strategy & data standards" data-da="Kommunal IKT-strategi og datastandarder">
+                        <span data-en="Municipal ICT strategy" data-da="Kommunal IKT-strategi">Municipal ICT strategy</span>
+                        <div class="popup">
+                            <div class="popup-icon">📋</div>
+                            <div class="popup-title" data-en="Portfolio-Level BIM Standards" data-da="Portefølje-niveau BIM-standarder">Portfolio-Level BIM Standards</div>
+                            <div data-en="Consistent data standards across all municipal buildings and infrastructure for long-term asset management."
+                                 data-da="Konsistente datastandarder på tværs af alle kommunale bygninger og infrastruktur til langsigtet aktivforvaltning.">Consistent data standards across all municipal buildings and infrastructure for long-term asset management.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Independent contractor BIM compliance auditing" data-da="Uafhængig BIM-compliance-revision af entreprenører">
+                        <span data-en="Independent BIM compliance auditing" data-da="Uafhængig BIM-compliance-revision">Independent BIM compliance auditing</span>
+                        <div class="popup">
+                            <div class="popup-icon">✅</div>
+                            <div class="popup-title" data-en="Third-Party Quality Verification" data-da="Tredjeparts kvalitetsverifikation">Third-Party Quality Verification</div>
+                            <div data-en="Independent verification that contractor models meet ICT Order requirements before final acceptance."
+                                 data-da="Uafhængig verifikation af at entreprenørmodeller opfylder IKT-krav inden endelig accept.">Independent verification that contractor models meet ICT Order requirements before final acceptance.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="GIS-BIM integration: Civil 3D ↔ municipal GIS" data-da="GIS-BIM-integration: Civil 3D ↔ kommunal GIS">
+                        <span data-en="GIS-BIM integration" data-da="GIS-BIM-integration">GIS-BIM integration</span>
+                        <div class="popup">
+                            <div class="popup-icon">🗺️</div>
+                            <div class="popup-title" data-en="Unified Spatial Data" data-da="Samlet rumlig data">Unified Spatial Data</div>
+                            <div data-en="Linking Civil 3D infrastructure models with municipal GIS for unified road, utilities, and building data."
+                                 data-da="Kobling af Civil 3D-infrastrukturmodeller med kommunal GIS for samlet vej-, forsynings- og bygningsdata.">Linking Civil 3D infrastructure models with municipal GIS for unified road, utilities, and building data.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Georadar surveys — accurate underground utility mapping" data-da="Georadar-undersøgelser — nøjagtig kortlægning af underjordiske ledninger">
+                        <span data-en="Georadar underground mapping" data-da="Georadar underjordskortlægning">Georadar underground mapping</span>
+                        <div class="popup">
+                            <div class="popup-icon">📡</div>
+                            <div class="popup-title" data-en="GPR Utility Detection" data-da="GPR-ledningsdetektion">GPR Utility Detection</div>
+                            <div data-en="Ground-penetrating radar surveys to accurately map buried pipes, cables, and voids before infrastructure projects."
+                                 data-da="Georadar-undersøgelser til nøjagtig kortlægning af nedgravede rør, kabler og hulrum inden infrastrukturprojekter.">Ground-penetrating radar surveys to accurately map buried pipes, cables, and voids before infrastructure projects.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="3D laser scanning of existing municipal buildings" data-da="3D-laserscanning af eksisterende kommunale bygninger">
+                        <span data-en="3D laser scanning existing buildings" data-da="3D-laserscanning af eksisterende bygninger">3D laser scanning existing buildings</span>
+                        <div class="popup">
+                            <div class="popup-icon">📐</div>
+                            <div class="popup-title" data-en="As-Built Records for Legacy Buildings" data-da="Som-bygget-registreringer for eksisterende bygninger">As-Built Records for Legacy Buildings</div>
+                            <div data-en="Creating accurate 3D as-built models of existing schools, care homes, and public buildings for renovation planning."
+                                 data-da="Oprettelse af nøjagtige 3D som-bygget-modeller af eksisterende skoler, plejehjem og offentlige bygninger til renoveringsplanlægning.">Creating accurate 3D as-built models of existing schools, care homes, and public buildings for renovation planning.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Dalux FM rollout across municipal building portfolio" data-da="Dalux FM-udrulning i kommunal bygningsportefølje">
+                        <span data-en="Dalux FM portfolio rollout" data-da="Dalux FM porteføljeudrulning">Dalux FM portfolio rollout</span>
+                        <div class="popup">
+                            <div class="popup-icon">🏢</div>
+                            <div class="popup-title" data-en="Centralized FM System" data-da="Centraliseret FM-system">Centralized FM System</div>
+                            <div data-en="Standardized Dalux FM setup across all municipal buildings with structured asset registers and maintenance plans."
+                                 data-da="Standardiseret Dalux FM-opsætning på tværs af alle kommunale bygninger med strukturerede aktivregistre og vedligeholdelsesplaner.">Standardized Dalux FM setup across all municipal buildings with structured asset registers and maintenance plans.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Procurement officer BIM evaluation training" data-da="BIM-evalueringsuddannelse for udbudspersonale">
+                        <span data-en="Procurement BIM training" data-da="BIM-uddannelse til udbudspersonale">Procurement BIM training</span>
+                        <div class="popup">
+                            <div class="popup-icon">🎓</div>
+                            <div class="popup-title" data-en="Upskilling Procurement Teams" data-da="Opkvalificering af udbudsteams">Upskilling Procurement Teams</div>
+                            <div data-en="Training procurement and technical staff to evaluate and reject poor-quality BIM submissions, protecting long-term data investment and ensuring ICT Order compliance."
+                                 data-da="Træning af udbuds- og teknisk personale til at vurdere og afvise lavkvalitets BIM-afleveringer, beskytter langsigtet datainvestering og sikrer IKT-bekendtgørelsens overholdelse.">Training procurement and technical staff to evaluate and reject poor-quality BIM submissions, protecting long-term data investment and ensuring ICT Order compliance.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-label" data-en="Client Benefits" data-da="Klientfordele">Client Benefits</div>
+                <ul class="benefits-list">
+                    <li data-en="<strong>Legally enforceable and technically verifiable EIR requirements</strong> ensure that project information deliverables can be formally assessed and non-compliant models rejected, strengthening the municipality's contractual position and data governance."
+                        data-da="<strong>Juridisk håndhævbare og teknisk verificerbare EIR-krav</strong> sikrer at projektinformationsleverancer kan vurderes formelt og ikke-compliant modeller afvises, styrker kommunens kontraktmæssige position og datastyring."><strong>Legally enforceable and technically verifiable EIR requirements</strong> ensure that project information deliverables can be formally assessed and non-compliant models rejected, strengthening the municipality's contractual position and data governance.</li>
+
+                    <li data-en="<strong>Systematic georadar-based mapping of underground utilities</strong> removes unsafe assumptions about buried infrastructure, reducing the risk of service disruptions, safety incidents, and unplanned costs ahead of roadworks and ground-related projects."
+                        data-da="<strong>Systematisk georadar-baseret kortlægning af underjordiske forsyningsledninger</strong> fjerner usikre antagelser om nedgravet infrastruktur, reducerer risikoen for serviceafbrydelser, sikkerhedshændelser og uplanlagte omkostninger forud for vejarbejder og jordrelaterede projekter."><strong>Systematic georadar-based mapping of underground utilities</strong> removes unsafe assumptions about buried infrastructure, reducing the risk of service disruptions, safety incidents, and unplanned costs ahead of roadworks and ground-related projects.</li>
+
+                    <li data-en="<strong>Integrated GIS–BIM information management</strong> provides a single, spatially coherent representation of roads, buildings, and technical infrastructure, reducing data duplication across departments and enabling coordinated planning and decision-making."
+                        data-da="<strong>Integreret GIS–BIM informationsstyring</strong> leverer én rumlig sammenhængende repræsentation af veje, bygninger og teknisk infrastruktur, reducerer dataduplikering på tværs af afdelinger og muliggør koordineret planlægning og beslutningstagning."><strong>Integrated GIS–BIM information management</strong> provides a single, spatially coherent representation of roads, buildings, and technical infrastructure, reducing data duplication across departments and enabling coordinated planning and decision-making.</li>
+
+                    <li data-en="<strong>Procurement and technical staff trained in BIM and ICT requirements</strong> are able to critically evaluate information quality at tender and handover, protecting the municipality's long-term digital asset investment and ensuring compliance with the ICT Order."
+                        data-da="<strong>Udbuds- og teknisk personale uddannet i BIM- og IKT-krav</strong> er i stand til kritisk at vurdere informationskvalitet ved udbud og aflevering, beskytter kommunens langsigtede digitale aktivinvestering og sikrer overholdelse af IKT-bekendtgørelsen."><strong>Procurement and technical staff trained in BIM and ICT requirements</strong> are able to critically evaluate information quality at tender and handover, protecting the municipality's long-term digital asset investment and ensuring compliance with the ICT Order.</li>
+                </ul>
+            </div>
+
+            <!-- CONSULTANTS -->
+            <div class="seg-view" id="tab-consultants">
+                <div class="seg-header">
+                    <div class="seg-icon">📐</div>
+                    <div>
+                        <h2 data-en="Engineering Consultants" data-da="Rådgivende ingeniører">Engineering Consultants</h2>
+                        <div class="seg-tagline" data-en="Architects, structural &amp; MEP engineers, surveyors, landscape architects"
+                                                   data-da="Arkitekter, konstruktions- og VVS-ingeniører, landinspektører, landskabsarkitekter">Architects, structural &amp; MEP engineers, surveyors, landscape architects</div>
+                        <div class="reg-badge" data-en="ICT Order · ISO 19650-2 · IFC · BIM Coordination" data-da="IKT-bekendtgørelsen · ISO 19650-2 · IFC · BIM-koordinering">ICT Order · ISO 19650-2 · IFC · BIM Coordination</div>
+                    </div>
+                </div>
+
+                <div class="pitch" data-en="Danish advisory firms increasingly win commissions requiring credible BIM methodology but few have a dedicated BIM specialist in-house. <strong>The result: generic BEPs that don't reflect the project, federated models no one actively manages, and QA failures that damage client relationships.</strong> An embedded specialist raises the firm's delivery standard without adding permanent headcount."
+                           data-da="Danske rådgiverfirmaer vinder i stigende grad projekter der kræver troværdig BIM-metodologi, men få har en dedikeret BIM-specialist internt. <strong>Resultatet: generiske BEPer der ikke afspejler projektet, fødererede modeller ingen aktivt styrer, og KS-fejl der skader kunderelationer.</strong> En indlejret specialist hæver firmaets leveranceniveau uden at tilføje fast personale.">Danish advisory firms increasingly win commissions requiring credible BIM methodology but few have a dedicated BIM specialist in-house. <strong>The result: generic BEPs that don't reflect the project, federated models no one actively manages, and QA failures that damage client relationships.</strong> An embedded specialist raises the firm's delivery standard without adding permanent headcount.</div>
+
+                <div class="two-col">
+                    <div class="card">
+                        <div class="card-label pain" data-en="Consultant-Specific Pain Points" data-da="Rådgiverspecifikke udfordringer">Consultant-Specific Pain Points</div>
+                        <ul class="bare">
+                            <li data-en="BIM methodology sections in tenders written without hands-on modelling experience, resulting in weak, non-credible commitments that are difficult to deliver and defend during project execution."
+                                data-da="BIM-metodikafsnit i tilbud skrevet uden praktisk modelleringserfaring, resulterer i svage, ikke-troværdige forpligtelser der er svære at levere og forsvare under projektudførelse.">BIM methodology sections in tenders written without hands-on modelling experience, resulting in weak, non-credible commitments that are difficult to deliver and defend during project execution.</li>
+                            <li data-en="Lack of active coordination of the federated model, allowing clashes to accumulate between disciplines and only surface late, increasing redesign effort and reputational risk."
+                                data-da="Manglende aktiv koordinering af den fødererede model lader kollisioner ophobes mellem discipliner og først opstå sent, øger omprojekteringsindsats og omdømmrisiko.">Lack of active coordination of the federated model, allowing clashes to accumulate between disciplines and only surface late, increasing redesign effort and reputational risk.</li>
+                            <li data-en="Inconsistent modelling standards and templates across the project team, leading to incompatible models and inefficient coordination workflows."
+                                data-da="Inkonsistente modelleringsstandarder og skabeloner på tværs af projektteamet fører til inkompatible modeller og ineffektive koordineringsworkflows.">Inconsistent modelling standards and templates across the project team, leading to incompatible models and inefficient coordination workflows.</li>
+                            <li data-en="Unreliable or incomplete IFC deliveries, meaning clients cannot effectively use the models they were contractually promised, exposing the consultant to audit findings and rework."
+                                data-da="Upålidelige eller ufuldstændige IFC-leverancer betyder at klienter ikke kan bruge de modeller de kontraktmæssigt fik lovet, udsætter rådgiveren for revisionsfund og omprojektering.">Unreliable or incomplete IFC deliveries, meaning clients cannot effectively use the models they were contractually promised, exposing the consultant to audit findings and rework.</li>
+                            <li data-en="Limited use of automation for repetitive modelling tasks, causing senior engineers and specialists to spend excessive time on low-value administrative work."
+                                data-da="Begrænset brug af automatisering til gentagne modelleringsopgaver medfører at senioringeniører og specialister bruger for meget tid på lavværdi administrativt arbejde.">Limited use of automation for repetitive modelling tasks, causing senior engineers and specialists to spend excessive time on low-value administrative work.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label kpi" data-en="Key Consultant Performance Metrics" data-da="Rådgiveres nøglepræstationsindikatorer">Key Consultant Performance Metrics</div>
+                        <ul class="bare">
+                            <li data-en="Tender win rate on commissions with BIM and ICT requirements, reflecting credibility and competitiveness in digitally enabled procurements."
+                                data-da="Tilbudsvinderrate på projekter med BIM- og IKT-krav, der afspejler troværdighed og konkurrenceevne i digitalt understøttede udbud.">Tender win rate on commissions with BIM and ICT requirements, reflecting credibility and competitiveness in digitally enabled procurements.</li>
+                            <li data-en="Clash count identified at coordination reviews, indicating the effectiveness of interdisciplinary coordination and model quality control."
+                                data-da="Antal kollisioner identificeret ved koordineringsreviews, der indikerer effektiviteten af tværfaglig koordinering og modelkvalitetskontrol.">Clash count identified at coordination reviews, indicating the effectiveness of interdisciplinary coordination and model quality control.</li>
+                            <li data-en="Client ICT Order audit pass rate, demonstrating compliance and reliability of information deliverables."
+                                data-da="Kundens IKT-bekendtgørelsens revisionsbeståelsesrate, der demonstrerer overholdelse og pålidelighed af informationsleverancer.">Client ICT Order (IKT-bekendtgørelsen) audit pass rate, demonstrating compliance and reliability of information deliverables.</li>
+                            <li data-en="Hours spent on repetitive modelling and documentation tasks, highlighting efficiency and use of specialist resources."
+                                data-da="Timer brugt på gentagne modellerings- og dokumentationsopgaver, der fremhæver effektivitet og brug af specialistressourcer.">Hours spent on repetitive modelling and documentation tasks, highlighting efficiency and use of specialist resources.</li>
+                            <li data-en="Repeat commission rate from satisfied clients, capturing long-term trust and perceived delivery quality."
+                                data-da="Genbestillingsrate fra tilfredse klienter, der indfanger langsigtet tillid og oplevet leveringskvalitet.">Repeat commission rate from satisfied clients, capturing long-term trust and perceived delivery quality.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label" data-en="Service Deliverables" data-da="Serviceydelser">Service Deliverables</div>
+                <div class="chips">
+                    <div class="chip" data-en="Project-specific BIM methodology &amp; BEP authoring" data-da="Projektspecifik BIM-metodologi og BEP-udarbejdelse">
+                        <span data-en="Project-specific BEP authoring" data-da="Projektspecifik BEP-udarbejdelse">Project-specific BEP authoring</span>
+                        <div class="popup">
+                            <div class="popup-icon">📘</div>
+                            <div class="popup-title" data-en="Credible BIM Plans" data-da="Troværdige BIM-planer">Credible BIM Plans</div>
+                            <div data-en="BEPs written by practitioners who manage BIM projects — credible in tenders, enforceable in delivery, and clearly aligned with actual workflows."
+                                 data-da="BEPer skrevet af praktikere der styrer BIM-projekter — troværdige i tilbud, håndhævbare i levering og tydeligt tilpasset faktiske workflows.">BEPs written by practitioners who manage BIM projects — credible in tenders, enforceable in delivery, and clearly aligned with actual workflows.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Federated model coordination — structured clash detection cycles" data-da="Fødereret modelkoordinering — strukturerede kollisionsdetektionscyklusser">
+                        <span data-en="Federated model coordination" data-da="Fødereret modelkoordinering">Federated model coordination</span>
+                        <div class="popup">
+                            <div class="popup-icon">🔄</div>
+                            <div class="popup-title" data-en="Regular Interdisciplinary Clash Cycles" data-da="Regelmæssige tværfaglige kollisionscyklusser">Regular Interdisciplinary Clash Cycles</div>
+                            <div data-en="Structured, regular model coordination cycles identifying and resolving clashes before design information is issued to contractors, protecting programme, fees, and professional reputation."
+                                 data-da="Strukturerede, regelmæssige modelkoordineringscyklusser der identificerer og løser kollisioner inden designinformation sendes til entreprenører, beskytter program, honorarer og fagligt omdømme.">Structured, regular model coordination cycles identifying and resolving clashes before design information is issued to contractors, protecting programme, fees, and professional reputation.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Modelling standards, templates &amp; shared parameter setup" data-da="Modelleringsstandarder, skabeloner og delte parametre">
+                        <span data-en="Modelling standards &amp; templates" data-da="Modelleringsstandarder og skabeloner">Modelling standards &amp; templates</span>
+                        <div class="popup">
+                            <div class="popup-icon">🔧</div>
+                            <div class="popup-title" data-en="Consistent Project Setup" data-da="Konsistent projektopsætning">Consistent Project Setup</div>
+                            <div data-en="Project-wide modelling templates with shared parameters ensuring model compatibility across all disciplines and teams."
+                                 data-da="Projektsomfattende modelleringsskabeloner med delte parametre sikrer modelkompatibilitet på tværs af alle discipliner og teams.">Project-wide modelling templates with shared parameters ensuring model compatibility across all disciplines and teams.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Independent model quality assurance &amp; ICT compliance reporting" data-da="Uafhængig modelkvalitetssikring og IKT-compliance-rapportering">
+                        <span data-en="Model quality assurance &amp; compliance" data-da="Modelkvalitetssikring og compliance">Model quality assurance &amp; compliance</span>
+                        <div class="popup">
+                            <div class="popup-icon">✅</div>
+                            <div class="popup-title" data-en="Rule-Based Compliance Reporting" data-da="Regelbaseret compliance-rapportering">Rule-Based Compliance Reporting</div>
+                            <div data-en="Independent model quality assurance and rule-based compliance reporting providing clients with clear evidence that models meet ICT Order requirements prior to milestone submissions."
+                                 data-da="Uafhængig modelkvalitetssikring og regelbaseret compliance-rapportering giver klienter klare beviser for at modeller opfylder IKT-krav inden milepælsafleveringer.">Independent model quality assurance and rule-based compliance reporting providing clients with clear evidence that models meet ICT Order requirements prior to milestone submissions.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="IFC export validation &amp; interoperability setup" data-da="IFC-eksportvalidering og interoperabilitetsopsætning">
+                        <span data-en="IFC export validation" data-da="IFC-eksportvalidering">IFC export validation</span>
+                        <div class="popup">
+                            <div class="popup-icon">🔀</div>
+                            <div class="popup-title" data-en="Interoperability Assurance" data-da="Interoperabilitetssikring">Interoperability Assurance</div>
+                            <div data-en="Ensuring IFC exports are clean, complete, and usable by clients and downstream systems — not broken models that fail contractual expectations."
+                                 data-da="Sikring af IFC-eksporter er rene, fuldstændige og brugbare af klienter og efterfølgende systemer — ikke ødelagte modeller der fejler kontraktmæssige forventninger.">Ensuring IFC exports are clean, complete, and usable by clients and downstream systems — not broken models that fail contractual expectations.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Documentation and quantity output automation" data-da="Automatisering af dokumentation og mængdeudtræk">
+                        <span data-en="Documentation &amp; QTO automation" data-da="Dokumentations- og mængdeautomatisering">Documentation &amp; QTO automation</span>
+                        <div class="popup">
+                            <div class="popup-icon">🤖</div>
+                            <div class="popup-title" data-en="Free Up Senior Staff Time" data-da="Frigør seniormedarbejdertid">Free Up Senior Staff Time</div>
+                            <div data-en="Automation of documentation, tagging, and quantity outputs reducing manual effort and freeing senior engineers to focus on design quality and client engagement."
+                                 data-da="Automatisering af dokumentation, tagging og mængdeoutput reducerer manuel indsats og frigør senioringeniører til at fokusere på designkvalitet og kundeengagement.">Automation of documentation, tagging, and quantity outputs reducing manual effort and freeing senior engineers to focus on design quality and client engagement.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="LOD/LOI matrix aligned to project phases" data-da="LOD/LOI-matrix tilpasset projektfaser">
+                        <span data-en="LOD/LOI matrix development" data-da="LOD/LOI-matrixudvikling">LOD/LOI matrix development</span>
+                        <div class="popup">
+                            <div class="popup-icon">📊</div>
+                            <div class="popup-title" data-en="Clear Modelling Requirements" data-da="Klare modelleringskrav">Clear Modelling Requirements</div>
+                            <div data-en="Level of Detail and Information matrices defining what is modelled at each project stage for consistency across disciplines and phases."
+                                 data-da="Detalje- og informationsniveau-matricer definerer hvad der modelleres i hver projektfase for konsistens på tværs af discipliner og faser.">Level of Detail and Information matrices defining what is modelled at each project stage for consistency across disciplines and phases.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Team BIM training workshops: coordination, standards, workflows" data-da="BIM-træningsworkshops for teamet: koordinering, standarder, workflows">
+                        <span data-en="Team BIM training workshops" data-da="BIM-træningsworkshops for teamet">Team BIM training workshops</span>
+                        <div class="popup">
+                            <div class="popup-icon">🎓</div>
+                            <div class="popup-title" data-en="Upskill Your Team" data-da="Opkvalificer dit team">Upskill Your Team</div>
+                            <div data-en="Practical hands-on training for consultants in modelling best practices, coordination workflows, and ICT Order compliance processes."
+                                 data-da="Praktisk hands-on træning for rådgivere i modelleringsbest practices, koordineringsworkflows og IKT-bekendtgørelsens compliance-processer.">Practical hands-on training for consultants in modelling best practices, coordination workflows, and ICT Order compliance processes.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-label" data-en="Client Benefits" data-da="Klientfordele">Client Benefits</div>
+                <ul class="benefits-list">
+                    <li data-en="<strong>A BIM Execution Plan authored by practitioners who actively manage BIM projects</strong> makes it credible in tenders, enforceable during delivery, and clearly aligned with actual workflows rather than generic text."
+                        data-da="<strong>En BIM-udførelsesplan udarbejdet af praktikere der aktivt styrer BIM-projekter</strong> gør den troværdig i tilbud, håndhævbar under levering og tydeligt tilpasset faktiske workflows frem for generisk tekst."><strong>A BIM Execution Plan authored by practitioners who actively manage BIM projects</strong> makes it credible in tenders, enforceable during delivery, and clearly aligned with actual workflows rather than generic text.</li>
+
+                    <li data-en="<strong>Structured, regular model coordination cycles</strong> identify and resolve clashes before design information is issued to contractors, protecting programme, fees, and professional reputation."
+                        data-da="<strong>Strukturerede, regelmæssige modelkoordineringscyklusser</strong> identificerer og løser kollisioner inden designinformation sendes til entreprenører, beskytter program, honorarer og fagligt omdømme."><strong>Structured, regular model coordination cycles</strong> identify and resolve clashes before design information is issued to contractors, protecting programme, fees, and professional reputation.</li>
+
+                    <li data-en="<strong>Automation of documentation, tagging, and quantity outputs</strong> reduces manual effort and frees senior engineers to focus on design quality, technical problem-solving, and client engagement."
+                        data-da="<strong>Automatisering af dokumentation, tagging og mængdeoutput</strong> reducerer manuel indsats og frigør senioringeniører til at fokusere på designkvalitet, teknisk problemløsning og kundeengagement."><strong>Automation of documentation, tagging, and quantity outputs</strong> reduces manual effort and frees senior engineers to focus on design quality, technical problem-solving, and client engagement.</li>
+
+                    <li data-en="<strong>Independent model quality assurance and rule-based compliance reporting</strong> provides clients with clear evidence that models meet ICT Order requirements prior to milestone submissions, reducing review comments and late rework."
+                        data-da="<strong>Uafhængig modelkvalitetssikring og regelbaseret compliance-rapportering</strong> giver klienter klare beviser for at modeller opfylder IKT-krav inden milepælsafleveringer, reducerer reviewkommentarer og sen omprojektering."><strong>Independent model quality assurance and rule-based compliance reporting</strong> provides clients with clear evidence that models meet ICT Order requirements prior to milestone submissions, reducing review comments and late rework.</li>
+                </ul>
+            </div>
+
+            <!-- PRICING -->
+            <div class="seg-view" id="tab-pricing">
+                <div class="seg-header">
+                    <div class="seg-icon">💼</div>
+                    <div>
+                        <h2 data-en="Pricing & Packaging" data-da="Priser og pakker">Pricing & Packaging</h2>
+                        <div class="seg-tagline" data-en="Service tiers and indicative rates — Danish market positioning"
+                                                   data-da="Serviceniveauer og vejledende takster — dansk markedspositionering">Service tiers and indicative rates — Danish market positioning</div>
+                    </div>
+                </div>
+
+                <div class="pitch" data-en="Senior BIM & ICT specialist services sit above generalist BIM technician rates and below large consultancy day rates. <strong>Engagements are structured around value delivered</strong> — clashes avoided, compliance achieved, surveys completed — rather than hours alone. A low-risk Discovery engagement opens the door to ongoing project and retainer work."
+                           data-da="Senior BIM- og IKT-specialisttjenester ligger over generalistische BIM-teknikertakster og under store rådgiverfirmaers dagstakster. <strong>Engagementer er struktureret omkring leveret værdi</strong> — undgåede kollisioner, opnået compliance, gennemførte undersøgelser — snarere end timer alene. Et lavrisiko-Discovery-engagement åbner døren til løbende projekt- og retainerarbejde.">Senior BIM & ICT specialist services sit above generalist BIM technician rates and below large consultancy day rates. <strong>Engagements are structured around value delivered</strong> — clashes avoided, compliance achieved, surveys completed — rather than hours alone. A low-risk Discovery engagement opens the door to ongoing project and retainer work.</div>
+
+                <div class="pricing-grid">
+                    <div class="price-card">
+                        <div class="price-tier" data-en="Entry" data-da="Introduktion">Entry</div>
+                        <div class="price-name" data-en="Discovery" data-da="Discovery">Discovery</div>
+                        <div class="price-range">DKK 8–15K</div>
+                        <div class="price-desc" data-en="Low-risk diagnostic engagement — audit current BIM setup, identify gaps, recommend next steps."
+                                                 data-da="Lavrisiko-diagnostisk engagement — revider nuværende BIM-opsætning, identificer huller, anbefal næste skridt.">Low-risk diagnostic engagement — audit current BIM setup, identify gaps, recommend next steps.</div>
+                        <ul class="price-inc">
+                            <li data-en="BIM maturity assessment" data-da="BIM-modenhedsvurdering">BIM maturity assessment</li>
+                            <li data-en="ICT Order compliance gap analysis" data-da="IKT-bekendtgørelsens compliance-gap-analyse">ICT Order (IKT-bekendtgørelsen) compliance gap analysis</li>
+                            <li data-en="Workflow & template review" data-da="Workflow- og skabelonreview">Workflow & template review</li>
+                            <li data-en="Written recommendations" data-da="Skrevne anbefalinger">Written recommendations</li>
+                        </ul>
+                    </div>
+
+                    <div class="price-card featured">
+                        <div class="price-tier" data-en="Standard" data-da="Standard">Standard</div>
+                        <div class="price-name" data-en="Project" data-da="Projekt">Project</div>
+                        <div class="price-range">DKK 30–120K</div>
+                        <div class="price-desc" data-en="Defined-scope project deliverables — BEP authoring, clash detection campaigns, model QA, training workshops."
+                                                 data-da="Defineret-scope projektleverancer — BEP-udarbejdelse, kollisionskontrolkampagner, model-KS, træningsworkshops.">Defined-scope project deliverables — BEP authoring, clash detection campaigns, model QA, training workshops.</div>
+                        <ul class="price-inc">
+                            <li data-en="All Discovery elements" data-da="Alle Discovery-elementer">All Discovery elements</li>
+                            <li data-en="Deliverable-based pricing" data-da="Leverancebaseret prissætning">Deliverable-based pricing</li>
+                            <li data-en="Fixed scope & timeline" data-da="Fast scope og tidslinje">Fixed scope & timeline</li>
+                            <li data-en="Milestone-based payments" data-da="Milepælsbaserede betalinger">Milestone-based payments</li>
+                        </ul>
+                    </div>
+
+                    <div class="price-card">
+                        <div class="price-tier" data-en="Preferred" data-da="Foretrukket">Preferred</div>
+                        <div class="price-name" data-en="Retainer" data-da="Retainer">Retainer</div>
+                        <div class="price-range">DKK 120K+/month</div>
+                        <div class="price-desc" data-en="Multi-project or portfolio-level engagements for municipalities, government, or large developers."
+                                                 data-da="Fler-projekt eller portefølje-niveau engagementer for kommuner, staten eller store developere.">Multi-project or portfolio-level engagements for municipalities, government, or large developers.</div>
+                        <ul class="price-inc">
+                            <li data-en="ICT strategy & portfolio rollout" data-da="IKT-strategi og porteføljeudrulning">ICT strategy & portfolio rollout</li>
+                            <li data-en="Multi-site scanning & georadar campaigns" data-da="Multi-site scanning og georadar-kampagner">Multi-site scanning & georadar campaigns</li>
+                            <li data-en="Digital twin roadmap delivery" data-da="Leverance af digital tvillingekreplan">Digital twin roadmap delivery</li>
+                            <li data-en="Organization-wide training programme" data-da="Organisationsomfattende træningsprogram">Organization-wide training programme</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label" data-en="Indicative Day Rates by Service" data-da="Vejledende dagstakster pr. ydelse">Indicative Day Rates by Service</div>
+                <table class="rate-table">
+                    <thead>
+                        <tr>
+                            <th data-en="Service" data-da="Ydelse">Service</th>
+                            <th data-en="Day Rate (DKK)" data-da="Dagstakst (kr.)">Day Rate (DKK)</th>
+                            <th data-en="Notes" data-da="Bemærkninger">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-en="BIM coordination & clash detection" data-da="BIM-koordinering og kollisionskontrol">BIM coordination & clash detection</td>
+                            <td>7,000–9,000</td>
+                            <td data-en="Navisworks, federated models, BCF reporting" data-da="Navisworks, fødererede modeller, BCF-rapportering">Navisworks, federated models, BCF reporting</td>
+                        </tr>
+                        <tr>
+                            <td data-en="Dynamo scripting & automation" data-da="Dynamo-scripting og automatisering">Dynamo scripting & automation</td>
+                            <td>8,000–10,500</td>
+                            <td data-en="Custom workflows for QTO, documentation, tagging" data-da="Tilpassede workflows til mængdeudtræk, dokumentation, tagging">Custom workflows for QTO, documentation, tagging</td>
+                        </tr>
+                        <tr>
+                            <td data-en="ICT Order compliance: EIR authoring" data-da="IKT-bekendtgørelsens compliance: EIR-udarbejdelse">ICT Order (IKT-bekendtgørelsen) compliance: EIR authoring</td>
+                            <td>8,500–11,000</td>
+                            <td data-en="Legal risk reduction — premium rate justified" data-da="Juridisk risikoreduktion — premium-takst berettiget">Legal risk reduction — premium rate justified</td>
+                        </tr>
+                        <tr>
+                            <td data-en="3D laser scanning per day on-site" data-da="3D-laserscanning pr. dag på stedet">3D laser scanning per day on-site</td>
+                            <td>9,000–13,000</td>
+                            <td data-en="Includes equipment; processing billed separately" data-da="Inkluderer udstyr; behandling faktureres separat">Includes equipment; processing billed separately</td>
+                        </tr>
+                        <tr>
+                            <td data-en="Scan-to-BIM: point cloud → Revit model" data-da="Scan-to-BIM: punktsky → Revit-model">Scan-to-BIM: point cloud → Revit model</td>
+                            <td>8,000–12,000</td>
+                            <td data-en="Depends on building complexity and LOD required" data-da="Afhænger af bygningskompleksitet og krævet LOD">Depends on building complexity and LOD required</td>
+                        </tr>
+                        <tr>
+                            <td data-en="Georadar survey per day on-site" data-da="Georadar-undersøgelse pr. dag på stedet">Georadar survey per day on-site</td>
+                            <td>10,000–15,000</td>
+                            <td data-en="Includes equipment & interpreted report" data-da="Inkluderer udstyr og fortolket rapport">Includes equipment & interpreted report</td>
+                        </tr>
+                        <tr>
+                            <td data-en="Machine design excavation profiles (Civil 3D)" data-da="Maskindesign udgravningsprofiler (Civil 3D)">Machine design excavation profiles (Civil 3D)</td>
+                            <td>7,500–10,500</td>
+                            <td data-en="GPS data export for site machinery included" data-da="GPS-dataeksport til pladsmaskiner inkluderet">GPS data export for site machinery included</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="section-label" data-en="Common Package Examples" data-da="Almindelige pakkeeksempler">Common Package Examples</div>
+                <ul class="starters">
+                    <li>
+                        <span class="seg-tag" data-en="Contractors" data-da="Entreprenører">Contractors</span>
+                        <span class="quote" data-en="&ldquo;We have a tender due in 3 weeks requiring a BEP and a clash-free federated model. Can you help us put together a credible submission?&rdquo;"
+                                           data-da="&ldquo;Vi har et tilbud forfaldent om 3 uger der kræver en BEP og en kollisionsfri fødereret model. Kan du hjælpe os med at sammensætte en troværdig aflevering?&rdquo;">&ldquo;We have a tender due in 3 weeks requiring a BEP and a clash-free federated model. Can you help us put together a credible submission?&rdquo;</span>
+                    </li>
+                    <li>
+                        <span class="seg-tag" data-en="Municipalities" data-da="Kommuner">Municipalities</span>
+                        <span class="quote" data-en="&ldquo;How do we verify that the models we receive at project handover genuinely meet ICT Order requirements?&rdquo;"
+                                           data-da="&ldquo;Hvordan verificerer vi at de modeller vi modtager ved projektaflevering virkelig opfylder IKT-bekendtgørelsens krav?&rdquo;">&ldquo;How do we verify that the models we receive at project handover genuinely meet ICT Order (IKT-bekendtgørelsen) requirements?&rdquo;</span>
+                    </li>
+                    <li>
+                        <span class="seg-tag" data-en="Utilities" data-da="Forsyning">Utilities</span>
+                        <span class="quote" data-en="&ldquo;Before our next district heating expansion contract starts — do we know with certainty what is buried in the ground, and where?&rdquo;"
+                                           data-da="&ldquo;Inden vores næste fjernvarmeudvidelseskontrakt starter — ved vi med sikkerhed hvad der er nedgravet i jorden, og hvor?&rdquo;">&ldquo;Before our next district heating expansion contract starts — do we know with certainty what is buried in the ground, and where?&rdquo;</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- DOC ROLE PANEL -->
+        <div class="role-panel" id="panel-doc">
+
+            <!-- DOC CONTRACTORS -->
+            <div class="seg-view active" id="tab-doc-contractors">
+                <div class="seg-header">
+                    <div class="seg-icon">📄</div>
+                    <div>
+                        <h2 data-en="Document Management for Contractors" data-da="Dokumentstyring for entreprenører">Document Management for Contractors</h2>
+                        <div class="seg-tagline" data-en="Site drawing control, submittal tracking, QA documentation, handover packages"
+                                                   data-da="Tegningskontrol på stedet, indsendelsessporingsregistrering, KS-dokumentation og afleveringspakker">Site drawing control, submittal tracking, QA documentation, handover packages</div>
+                        <div class="reg-badge" data-en="ICT Order · Dalux Build · ISO 19650-2" data-da="IKT-bekendtgørelsen · Dalux Build · ISO 19650-2">ICT Order · Dalux Build · ISO 19650-2</div>
+                    </div>
+                </div>
+
+                <div class="pitch" data-en="On complex construction projects, poor document control leads to costly rework, delays, and disputes. When teams work from outdated drawings or incomplete information, the impact escalates quickly across trades and timelines. <strong>Contractors need document control that is fast, field-proof, and audit-ready</strong> — not a shared drive that no one manages. Structured document management from contract award through to handover protects programme, budget, and against disputes."
+                           data-da="På komplekse byggeprojekter fører dårlig dokumentkontrol til kostbar omprojektering, forsinkelser og tvister. Når teams arbejder fra forældede tegninger eller ufuldstændig information, eskalerer konsekvenserne hurtigt på tværs af faggrupper og tidslinjer. <strong>Entreprenører har brug for dokumentkontrol der er hurtig, feltbeskyttet og revisjonsklar</strong> — ikke et delt drev som ingen styrer. Struktureret dokumentstyring fra kontraktindgåelse til aflevering beskytter program, budget og mod tvister.">On complex construction projects, poor document control leads to costly rework, delays, and disputes. When teams work from outdated drawings or incomplete information, the impact escalates quickly across trades and timelines. <strong>Contractors need document control that is fast, field-proof, and audit-ready</strong> — not a shared drive that no one manages. Structured document management from contract award through to handover protects programme, budget, and against disputes.</div>
+
+                <div class="two-col">
+                    <div class="card">
+                        <div class="card-label pain" data-en="Critical Risks" data-da="Kritiske risici">Critical Risks</div>
+                        <ul class="bare">
+                            <li data-en="Trade teams working from superseded or unapproved drawing revisions, causing construction errors and avoidable rework."
+                                data-da="Fagteams arbejder fra forældede eller ikke-godkendte tegningsrevisioner, forårsager byggefejl og undgåelig omprojektering.">Trade teams working from superseded or unapproved drawing revisions, causing construction errors and avoidable rework.</li>
+                            <li data-en="No single source of truth — multiple document versions in circulation, creating duplication, confusion, and conflicting instructions."
+                                data-da="Ingen enkelt sandhedskilde — flere dokumentversioner i omløb, skaber duplikering, forvirring og modstridende instruktioner.">No single source of truth — multiple document versions in circulation, creating duplication, confusion, and conflicting instructions.</li>
+                            <li data-en="Manual or inconsistent submittal and transmittal tracking, causing approval delays and lost communications."
+                                data-da="Manuel eller inkonsistent indsendelse og transmittal-sporing, forårsager godkendelsesforsinkelser og tabte kommunikationer.">Manual or inconsistent submittal and transmittal tracking, causing approval delays and lost communications.</li>
+                            <li data-en="Incomplete or unstructured QA and compliance documentation, failing client audits and exposing the contractor to claims."
+                                data-da="Ufuldstændig eller ustruktureret KS- og compliancedokumentation, fejler kunderevisioner og udsætter entreprenøren for krav.">Incomplete or unstructured QA and compliance documentation, failing client audits and exposing the contractor to claims.</li>
+                            <li data-en="Last-minute assembly of handover documentation, resulting in client rejection, delays to final payment, and commercial exposure."
+                                data-da="Eleventh-hour sammensætning af afleveringsdokumentation, resulterer i klientafvisning, forsinkelser til slutbetaling og kommerciel eksponering.">Last-minute assembly of handover documentation, resulting in client rejection, delays to final payment, and commercial exposure.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label kpi" data-en="What Gets Measured" data-da="Hvad der måles">What Gets Measured</div>
+                        <ul class="bare">
+                            <li data-en="Number of drawing revision errors leading to rework or delays."
+                                data-da="Antal tegningsrevisionsfejl der fører til omprojektering eller forsinkelser.">Number of drawing revision errors leading to rework or delays.</li>
+                            <li data-en="Submittal and approval cycle time (days)."
+                                data-da="Indsendelse og godkendelsescyklustid (dage).">Submittal and approval cycle time (days).</li>
+                            <li data-en="Percentage of documents compliant with naming and classification standards."
+                                data-da="Andel af dokumenter compliant med navngivnings- og klassifikationsstandarder.">Percentage of documents compliant with naming and classification standards.</li>
+                            <li data-en="RFI and technical query response time."
+                                data-da="RFI og teknisk forespørgsel svartid.">RFI and technical query response time.</li>
+                            <li data-en="Handover readiness index — completeness of O&amp;M, as-built, and asset data at practical completion."
+                                data-da="Afleveringsparathedindeks — fuldstændighed af O&amp;M, som-bygget og aktivdata ved praktisk færdiggørelse.">Handover readiness index — completeness of O&amp;M, as-built, and asset data at practical completion.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label" data-en="Service Deliverables" data-da="Serviceydelser">Service Deliverables</div>
+                <div class="chips">
+                    <div class="chip" data-en="CDE setup and configuration" data-da="CDE-opsætning og konfigurering">
+                        <span data-en="CDE setup &amp; configuration" data-da="CDE-opsætning og konfigurering">CDE setup &amp; configuration</span>
+                        <div class="popup">
+                            <div class="popup-icon">☁️</div>
+                            <div class="popup-title" data-en="Controlled Document Environment" data-da="Kontrolleret dokumentmiljø">Controlled Document Environment</div>
+                            <div data-en="Configured Common Data Environment with structured folders, roles, and permissions. Ensures controlled access and a single source of truth from project start."
+                                 data-da="Konfigureret Common Data Environment med strukturerede mapper, roller og rettigheder. Sikrer kontrolleret adgang og en enkelt sandhedskilde fra projektstart.">Configured Common Data Environment with structured folders, roles, and permissions. Ensures controlled access and a single source of truth from project start.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Drawing register &amp; version control" data-da="Tegningsregister og versionskontrol">
+                        <span data-en="Drawing register &amp; version control" data-da="Tegningsregister og versionskontrol">Drawing register &amp; version control</span>
+                        <div class="popup">
+                            <div class="popup-icon">📋</div>
+                            <div class="popup-title" data-en="Revision Management" data-da="Revisionsstyring">Revision Management</div>
+                            <div data-en="Centralised drawing register ensuring all stakeholders work from the latest approved revisions, with full traceability of changes and superseded documents."
+                                 data-da="Centralt tegningsregister sikrer alle interessenter arbejder fra seneste godkendte revisioner, med fuld sporbarhed af ændringer og forældede dokumenter.">Centralised drawing register ensuring all stakeholders work from the latest approved revisions, with full traceability of changes and superseded documents.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Submittals workflow &amp; tracking" data-da="Indsendelsesworkflow og sporing">
+                        <span data-en="Submittals workflow &amp; tracking" data-da="Indsendelsesworkflow og sporing">Submittals workflow &amp; tracking</span>
+                        <div class="popup">
+                            <div class="popup-icon">✉️</div>
+                            <div class="popup-title" data-en="Structured Approval Workflows" data-da="Strukturerede godkendelsesworkflows">Structured Approval Workflows</div>
+                            <div data-en="Structured submittal processes with defined review and approval workflows. Real-time status visibility, automated reminders, and reduced approval cycle times."
+                                 data-da="Strukturerede indsendelsesprocesser med definerede review- og godkendelsesworkflows. Realtidsstatussynlighed, automatiske påmindelser og reducerede godkendelsescyklustider.">Structured submittal processes with defined review and approval workflows. Real-time status visibility, automated reminders, and reduced approval cycle times.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="QA checklist configuration" data-da="KS-tjeklistekonfiguration">
+                        <span data-en="QA checklist configuration" data-da="KS-tjeklistekonfiguration">QA checklist configuration</span>
+                        <div class="popup">
+                            <div class="popup-icon">✅</div>
+                            <div class="popup-title" data-en="Location-Linked Quality Records" data-da="Placeringsklædt kvalitetsregistreringer">Location-Linked Quality Records</div>
+                            <div data-en="Digital QA/QC checklists linked to drawings and site locations, with photo evidence and timestamps to support compliance and audit readiness."
+                                 data-da="Digitale KS-tjeklister koblet til tegninger og pladsplaceringer, med fotodokumentation og tidsstempler til støtte for compliance og revisionsparathed.">Digital QA/QC checklists linked to drawings and site locations, with photo evidence and timestamps to support compliance and audit readiness.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Document Management Plan &amp; standards" data-da="Dokumentstyringsplan og standarder">
+                        <span data-en="Document Management Plan &amp; standards" data-da="Dokumentstyringsplan og standarder">Document Management Plan &amp; standards</span>
+                        <div class="popup">
+                            <div class="popup-icon">📘</div>
+                            <div class="popup-title" data-en="Governance and Consistency" data-da="Styring og konsistens">Governance and Consistency</div>
+                            <div data-en="Document Management Plan including naming conventions, classification standards, and governance procedures. Ensures consistency, compliance, and clarity across all project documentation."
+                                 data-da="Dokumentstyringsplan med navnekonventioner, klassifikationsstandarder og styringsprocedurer. Sikrer konsistens, compliance og klarhed på tværs af al projektdokumentation.">Document Management Plan including naming conventions, classification standards, and governance procedures. Ensures consistency, compliance, and clarity across all project documentation.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Transmittal &amp; communication control" data-da="Transmittal og kommunikationskontrol">
+                        <span data-en="Transmittal &amp; communication control" data-da="Transmittal og kommunikationskontrol">Transmittal &amp; communication control</span>
+                        <div class="popup">
+                            <div class="popup-icon">📬</div>
+                            <div class="popup-title" data-en="Full Audit Trail of Correspondence" data-da="Fuld revisionsspor for korrespondance">Full Audit Trail of Correspondence</div>
+                            <div data-en="Standardised handling of document transmittals and formal communications — a clear audit trail of what was issued, to whom, and when, reducing disputes and miscommunication."
+                                 data-da="Standardiseret håndtering af dokumenttransmittals og formel kommunikation — et klart revisionsspor over hvad der er udsendt, til hvem og hvornår, reducerer tvister og misforståelser.">Standardised handling of document transmittals and formal communications — a clear audit trail of what was issued, to whom, and when, reducing disputes and miscommunication.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Change &amp; RFI tracking" data-da="Ændrings- og RFI-sporing">
+                        <span data-en="Change &amp; RFI tracking" data-da="Ændrings- og RFI-sporing">Change &amp; RFI tracking</span>
+                        <div class="popup">
+                            <div class="popup-icon">🔄</div>
+                            <div class="popup-title" data-en="Decisions Logged and Linked" data-da="Beslutninger logget og koblet">Decisions Logged and Linked</div>
+                            <div data-en="Management of RFIs, technical queries, and document-related changes. All decisions logged, tracked, and linked to relevant documents for full transparency."
+                                 data-da="Styring af RFIer, tekniske forespørgsler og dokumentrelaterede ændringer. Alle beslutninger logget, sporet og koblet til relevante dokumenter for fuld gennemsigtighed.">Management of RFIs, technical queries, and document-related changes. All decisions logged, tracked, and linked to relevant documents for full transparency.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Handover document packaging — ICT Order compliant" data-da="Afleveringsdokumentpakke — IKT-bekendtgørelsen compliant">
+                        <span data-en="Handover document packaging" data-da="Afleveringsdokumentpakke">Handover document packaging</span>
+                        <div class="popup">
+                            <div class="popup-icon">📦</div>
+                            <div class="popup-title" data-en="Progressive Handover Preparation" data-da="Progressiv afleveringsforberedelse">Progressive Handover Preparation</div>
+                            <div data-en="Progressive compilation of handover documentation throughout the project lifecycle — avoiding last-minute delays and ensuring all required documents are structured, complete, and client-ready."
+                                 data-da="Progressiv kompilering af afleveringsdokumentation gennem projektets levetid — undgår eleventh-hour forsinkelser og sikrer alle påkrævede dokumenter er strukturerede, fuldstændige og klientklare.">Progressive compilation of handover documentation throughout the project lifecycle — avoiding last-minute delays and ensuring all required documents are structured, complete, and client-ready.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="O&amp;M manuals &amp; asset documentation" data-da="O&amp;M-manualer og aktivdokumentation">
+                        <span data-en="O&amp;M manuals &amp; asset documentation" data-da="O&amp;M-manualer og aktivdokumentation">O&amp;M manuals &amp; asset documentation</span>
+                        <div class="popup">
+                            <div class="popup-icon">📖</div>
+                            <div class="popup-title" data-en="Operational FM Documentation" data-da="Operationel FM-dokumentation">Operational FM Documentation</div>
+                            <div data-en="Structuring and verification of O&amp;M manuals and asset data. Ensures information is complete, accurate, and aligned with client and operational requirements including COBie where applicable."
+                                 data-da="Strukturering og verifikation af O&amp;M-manualer og aktivdata. Sikrer information er fuldstændig, nøjagtig og tilpasset klient- og driftskrav inkl. COBie hvor relevant.">Structuring and verification of O&amp;M manuals and asset data. Ensures information is complete, accurate, and aligned with client and operational requirements including COBie where applicable.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Warranty certificate register" data-da="Garanticertifikatregister">
+                        <span data-en="Warranty certificate register" data-da="Garanticertifikatregister">Warranty certificate register</span>
+                        <div class="popup">
+                            <div class="popup-icon">🔐</div>
+                            <div class="popup-title" data-en="Asset-Linked Warranty Tracking" data-da="Aktivkoblet garantisporing">Asset-Linked Warranty Tracking</div>
+                            <div data-en="Centralised warranty register linked to assets and documentation — ensuring all warranties are captured, traceable, and accessible post-handover."
+                                 data-da="Centralt garantiregister koblet til aktiver og dokumentation — sikrer alle garantier er registrerede, sporbare og tilgængelige efter aflevering.">Centralised warranty register linked to assets and documentation — ensuring all warranties are captured, traceable, and accessible post-handover.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-label" data-en="Business Value" data-da="Forretningsværdi">Business Value</div>
+                <ul class="benefits-list">
+                    <li data-en="<strong>Single source of truth</strong> ensures all stakeholders work from the latest approved information, eliminating costly rework from outdated drawings and conflicting document versions."
+                        data-da="<strong>Enkelt sandhedskilde</strong> sikrer alle interessenter arbejder fra senest godkendte information, eliminerer kostbar omprojektering fra forældede tegninger og modstridende dokumentversioner."><strong>Single source of truth</strong> ensures all stakeholders work from the latest approved information, eliminating costly rework from outdated drawings and conflicting document versions.</li>
+                    <li data-en="<strong>Streamlined digital workflows reduce submittal and approval delays</strong> — keeping procurement and programme on track and reducing downstream commercial risk."
+                        data-da="<strong>Strømlinjede digitale workflows reducerer indsendelse- og godkendelsesforsinkelser</strong> — holder indkøb og program på sporet og reducerer nedstrøms kommerciel risiko."><strong>Streamlined digital workflows reduce submittal and approval delays</strong> — keeping procurement and programme on track and reducing downstream commercial risk.</li>
+                    <li data-en="<strong>Structured QA and compliance documentation</strong> supports audits, meets contractual and regulatory requirements, and provides defensible evidence of completed and verified work."
+                        data-da="<strong>Struktureret KS- og compliancedokumentation</strong> understøtter revisioner, opfylder kontraktmæssige og regulatoriske krav og leverer forsvarligt bevis for fuldført og verificeret arbejde."><strong>Structured QA and compliance documentation</strong> supports audits, meets contractual and regulatory requirements, and provides defensible evidence of completed and verified work.</li>
+                    <li data-en="<strong>Documentation built progressively throughout the project</strong> enables smooth and timely close-out, eliminates last-minute data remediation, and protects against final payment disputes."
+                        data-da="<strong>Dokumentation opbygget progressivt gennem projektet</strong> muliggør smidig og rettidig afslutning, eliminerer eleventh-hour dataudbedring og beskytter mod slutbetalingstvister."><strong>Documentation built progressively throughout the project</strong> enables smooth and timely close-out, eliminates last-minute data remediation, and protects against final payment disputes.</li>
+                </ul>
+            </div>
+
+            <!-- DOC MUNICIPALITIES -->
+            <div class="seg-view" id="tab-doc-municipalities">
+                <div class="seg-header">
+                    <div class="seg-icon">🏛️</div>
+                    <div>
+                        <h2 data-en="Document Management for Municipalities" data-da="Dokumentstyring for kommuner">Document Management for Municipalities</h2>
+                        <div class="seg-tagline" data-en="ICT Order compliant project archives, public accountability trails, portfolio document standards"
+                                                   data-da="IKT-bekendtgørelsens compliant projektarkiver, offentlige ansvarlighedsspor, portefølje-dokumentstandarder">ICT Order compliant project archives, public accountability trails, portfolio document standards</div>
+                        <div class="reg-badge" data-en="ICT Order · Danish Public Administration Law · Danish Building Authority" data-da="IKT-bekendtgørelsen · Forvaltningsloven · Bygningsstyrelsen">ICT Order · Danish Public Administration Law · Danish Building Authority</div>
+                    </div>
+                </div>
+
+                <div class="pitch" data-en="Municipal construction projects require documentation that can withstand audits, legal scrutiny, and long-term asset management. Without consistent standards and structured systems, fragmented records create significant governance risks. <strong>Document management for municipalities is both a project delivery tool and a governance instrument</strong> — ensuring compliant handovers, transparent procurement records, and accessible digital archives that support both project delivery and long-term portfolio management."
+                           data-da="Kommunale byggeprojekter kræver dokumentation der kan modstå revisioner, juridisk kontrol og langsigtet aktivforvaltning. Uden konsistente standarder og strukturerede systemer skaber fragmenterede registreringer betydelige styringsrisici. <strong>Dokumentstyring for kommuner er både et projektleveranceværktøj og et styringsinstrument</strong> — sikrer compliant afleveringer, transparente udbudsregistreringer og tilgængelige digitale arkiver der understøtter både projektlevering og langsigtet porteføljeforvaltning.">Municipal construction projects require documentation that can withstand audits, legal scrutiny, and long-term asset management. Without consistent standards and structured systems, fragmented records create significant governance risks. <strong>Document management for municipalities is both a project delivery tool and a governance instrument</strong> — ensuring compliant handovers, transparent procurement records, and accessible digital archives that support both project delivery and long-term portfolio management.</div>
+
+                <div class="two-col">
+                    <div class="card">
+                        <div class="card-label pain" data-en="Critical Risks" data-da="Kritiske risici">Critical Risks</div>
+                        <ul class="bare">
+                            <li data-en="No consistent document standards across projects, leading to fragmented information and incomparable portfolio data."
+                                data-da="Ingen konsistente dokumentstandarder på tværs af projekter fører til fragmenteret information og ikke-sammenlignelige porteføljedata.">No consistent document standards across projects, leading to fragmented information and incomparable portfolio data.</li>
+                            <li data-en="Procurement and decision records not structured for audit or legal review, exposing the municipality to accountability challenges."
+                                data-da="Udbuds- og beslutningsregistreringer ikke struktureret til revision eller juridisk gennemgang udsætter kommunen for ansvarlighedsudfordringer.">Procurement and decision records not structured for audit or legal review, exposing the municipality to accountability challenges.</li>
+                            <li data-en="Handover documentation not verified against ICT Order requirements before acceptance, resulting in non-compliant project records."
+                                data-da="Afleveringsdokumentation ikke verificeret mod IKT-bekendtgørelsens krav inden accept, resulterer i ikke-compliant projektregistreringer.">Handover documentation not verified against ICT Order (IKT-bekendtgørelsen) requirements before acceptance, resulting in non-compliant project records.</li>
+                            <li data-en="Lack of accessible digital archives for legacy buildings, preventing efficient renovation planning and operational management."
+                                data-da="Manglende tilgængelige digitale arkiver for eksisterende bygninger forhindrer effektiv renoveringsplanlægning og operationel styring.">Lack of accessible digital archives for legacy buildings, preventing efficient renovation planning and operational management.</li>
+                            <li data-en="Loss of institutional knowledge due to staff turnover and poor information governance, creating organisational risk."
+                                data-da="Tab af institutionel viden på grund af personaleomsætning og dårlig informationsstyring skaber organisatorisk risiko.">Loss of institutional knowledge due to staff turnover and poor information governance, creating organisational risk.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label kpi" data-en="What Gets Measured" data-da="Hvad der måles">What Gets Measured</div>
+                        <ul class="bare">
+                            <li data-en="Percentage of projects compliant with ICT Order at handover."
+                                data-da="Andel af projekter compliant med IKT-bekendtgørelsen ved aflevering.">Percentage of projects compliant with ICT Order (IKT-bekendtgørelsen) at handover.</li>
+                            <li data-en="Completeness of procurement and decision audit trails."
+                                data-da="Fuldstændighed af udbuds- og beslutningsrevisionsspor.">Completeness of procurement and decision audit trails.</li>
+                            <li data-en="Percentage of portfolio assets with accessible digital documentation."
+                                data-da="Andel af porteføljeaktiver med tilgængelig digital dokumentation.">Percentage of portfolio assets with accessible digital documentation.</li>
+                            <li data-en="Compliance with document retention policies (Danish Public Administration Law)."
+                                data-da="Overholdelse af dokumentopbevaringspolitikker (Forvaltningsloven).">Compliance with document retention policies (Forvaltningsloven).</li>
+                            <li data-en="Number of non-compliance issues identified during audits or public inquiries."
+                                data-da="Antal non-compliance problemer identificeret under revisioner eller offentlige forespørgsler.">Number of non-compliance issues identified during audits or public inquiries.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-label" data-en="Service Deliverables" data-da="Serviceydelser">Service Deliverables</div>
+                <div class="chips">
+                    <div class="chip" data-en="Municipal-wide document standards" data-da="Kommunale dokumentstandarder">
+                        <span data-en="Municipal document standards" data-da="Kommunale dokumentstandarder">Municipal document standards</span>
+                        <div class="popup">
+                            <div class="popup-icon">📋</div>
+                            <div class="popup-title" data-en="Portfolio-Wide Consistency" data-da="Porteføljedækkende konsistens">Portfolio-Wide Consistency</div>
+                            <div data-en="Defined municipal-wide standards for naming, classification, and structure — ensuring consistency across all projects and enabling portfolio-level comparison and control."
+                                 data-da="Definerede kommunale standarder for navngivning, klassifikation og struktur — sikrer konsistens på tværs af alle projekter og muliggør porteføljeniveau sammenligning og kontrol.">Defined municipal-wide standards for naming, classification, and structure — ensuring consistency across all projects and enabling portfolio-level comparison and control.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="CDE configuration for public sector compliance" data-da="CDE-konfiguration til offentlig sektor-compliance">
+                        <span data-en="Public sector CDE configuration" data-da="Offentlig sektor CDE-konfiguration">Public sector CDE configuration</span>
+                        <div class="popup">
+                            <div class="popup-icon">☁️</div>
+                            <div class="popup-title" data-en="Audit-Ready Document Environment" data-da="Revisjonsklar dokumentmiljø">Audit-Ready Document Environment</div>
+                            <div data-en="Compliant Common Data Environment tailored for public sector requirements — secure access, structured workflows, and centralised document control."
+                                 data-da="Compliant Common Data Environment skræddersyet til offentlige sektorkrav — sikker adgang, strukturerede workflows og centraliseret dokumentkontrol.">Compliant Common Data Environment tailored for public sector requirements — secure access, structured workflows, and centralised document control.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Procurement records &amp; decision audit trail" data-da="Udbudsregistreringer og beslutningsrevisionsspor">
+                        <span data-en="Procurement records" data-da="Udbudsregistreringer">Procurement records</span>
+                        <div class="popup">
+                            <div class="popup-icon">⚖️</div>
+                            <div class="popup-title" data-en="Transparent and Defensible Records" data-da="Transparente og forsvarlige registreringer">Transparent and Defensible Records</div>
+                            <div data-en="Structured capture of procurement and decision documentation — creating a transparent and auditable trail that meets public accountability requirements."
+                                 data-da="Struktureret registrering af udbuds- og beslutningsdokumentation — skaber et transparent og reviderbart spor der opfylder offentlige ansvarlighedskrav.">Structured capture of procurement and decision documentation — creating a transparent and auditable trail that meets public accountability requirements.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="ICT Order handover compliance check" data-da="IKT-bekendtgørelsen afleveringscompliance-tjek">
+                        <span data-en="ICT Order handover verification" data-da="IKT-bekendtgørelsen afleveringsverifikation">ICT Order handover verification</span>
+                        <div class="popup">
+                            <div class="popup-icon">✅</div>
+                            <div class="popup-title" data-en="Pre-Acceptance Compliance Check" data-da="Præ-accept compliance-tjek">Pre-Acceptance Compliance Check</div>
+                            <div data-en="Verification of handover documentation against ICT Order requirements before acceptance — ensuring contractors deliver complete and compliant information."
+                                 data-da="Verifikation af afleveringsdokumentation mod IKT-krav inden accept — sikrer entreprenører leverer fuldstændig og compliant information.">Verification of handover documentation against ICT Order requirements before acceptance — ensuring contractors deliver complete and compliant information.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Legacy document digitisation &amp; archiving" data-da="Legacy-dokument digitalisering og arkivering">
+                        <span data-en="Legacy document digitisation" data-da="Legacy-dokument digitalisering">Legacy document digitisation</span>
+                        <div class="popup">
+                            <div class="popup-icon">📚</div>
+                            <div class="popup-title" data-en="Accessible Digital Archives" data-da="Tilgængelige digitale arkiver">Accessible Digital Archives</div>
+                            <div data-en="Conversion of physical and unstructured legacy documents into accessible digital archives — enabling efficient retrieval and supporting long-term asset management."
+                                 data-da="Konvertering af fysiske og ustrukturerede legacy-dokumenter til tilgængelige digitale arkiver — muliggør effektiv hentning og understøtter langsigtet aktivforvaltning.">Conversion of physical and unstructured legacy documents into accessible digital archives — enabling efficient retrieval and supporting long-term asset management.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Document retention policy — Danish Public Administration Law aligned" data-da="Dokumentopbevaringspolitik — Forvaltningsloven tilpasset">
+                        <span data-en="Document retention policy" data-da="Dokumentopbevaringspolitik">Document retention policy</span>
+                        <div class="popup">
+                            <div class="popup-icon">🔐</div>
+                            <div class="popup-title" data-en="Legal Compliance for Public Records" data-da="Juridisk compliance for offentlige registreringer">Legal Compliance for Public Records</div>
+                            <div data-en="Definition and implementation of document retention and archiving rules aligned with Danish Public Administration Law — ensuring compliance and protecting institutional knowledge."
+                                 data-da="Definition og implementering af dokumentopbevaring og arkiveringsregler tilpasset Forvaltningsloven — sikrer compliance og beskytter institutionel viden.">Definition and implementation of document retention and archiving rules aligned with Forvaltningsloven — ensuring compliance and protecting institutional knowledge.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Portfolio document audit &amp; gap analysis" data-da="Portefølje dokumentrevision og gap-analyse">
+                        <span data-en="Portfolio document audit" data-da="Portefølje dokumentrevision">Portfolio document audit</span>
+                        <div class="popup">
+                            <div class="popup-icon">🔍</div>
+                            <div class="popup-title" data-en="Portfolio-Level Assessment" data-da="Porteføljeniveau vurdering">Portfolio-Level Assessment</div>
+                            <div data-en="Assessment of document quality and completeness across projects or buildings — identifying gaps, risks, and improvement opportunities at portfolio level."
+                                 data-da="Vurdering af dokumentkvalitet og -fuldstændighed på tværs af projekter eller bygninger — identificerer huller, risici og forbedringspotentialer på porteføljeniveau.">Assessment of document quality and completeness across projects or buildings — identifying gaps, risks, and improvement opportunities at portfolio level.</div>
+                        </div>
+                    </div>
+
+                    <div class="chip" data-en="Staff training &amp; governance framework" data-da="Personaletræning og styringsramme">
+                        <span data-en="Staff training &amp; governance" data-da="Personaletræning og styring">Staff training &amp; governance</span>
+                        <div class="popup">
+                            <div class="popup-icon">🎓</div>
+                            <div class="popup-title" data-en="Consistent Adoption Across the Organisation" data-da="Konsistent adoption i hele organisationen">Consistent Adoption Across the Organisation</div>
+                            <div data-en="Training of municipal staff in systems, standards, and workflows — ensuring consistent adoption and long-term governance of project information."
+                                 data-da="Træning af kommunalt personale i systemer, standarder og workflows — sikrer konsistent adoption og langsigtet styring af projektinformation.">Training of municipal staff in systems, standards, and workflows — ensuring consistent adoption and long-term governance of project information.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-label" data-en="Business Value" data-da="Forretningsværdi">Business Value</div>
+                <ul class="benefits-list">
+                    <li data-en="<strong>Consistent standards across all projects</strong> enable comparable, high-quality documentation portfolio-wide — supporting better planning, budgeting, and asset management decisions."
+                        data-da="<strong>Konsistente standarder på tværs af alle projekter</strong> muliggør sammenlignelig, høj-kvalitets dokumentation porteføljedækkende — understøtter bedre planlægnings-, budgetlægnings- og aktivforvaltningsbeslutninger."><strong>Consistent standards across all projects</strong> enable comparable, high-quality documentation portfolio-wide — supporting better planning, budgeting, and asset management decisions.</li>
+                    <li data-en="<strong>Audit-ready procurement records</strong> strengthen transparency, protect against legal challenges, and demonstrate public accountability across the entire project portfolio."
+                        data-da="<strong>Revisjonsklar udbudsregistreringer</strong> styrker gennemsigtighed, beskytter mod juridiske udfordringer og demonstrerer offentlig ansvarlighed på tværs af hele projektporteføljen."><strong>Audit-ready procurement records</strong> strengthen transparency, protect against legal challenges, and demonstrate public accountability across the entire project portfolio.</li>
+                    <li data-en="<strong>ICT Order compliant handovers</strong> ensure only complete, verified documentation is accepted — contractors can no longer deliver non-compliant packages and claim project completion."
+                        data-da="<strong>IKT-bekendtgørelsen compliant afleveringer</strong> sikrer kun fuldstændig, verificeret dokumentation accepteres — entreprenører kan ikke længere levere ikke-compliant pakker og kræve projektfærdiggørelse."><strong>ICT Order compliant handovers</strong> ensure only complete, verified documentation is accepted — contractors can no longer deliver non-compliant packages and claim project completion.</li>
+                    <li data-en="<strong>Accessible digital archives and strong retention governance</strong> reduce time spent searching for information, support public inquiries, prevent knowledge loss from staff turnover, and create a reliable digital foundation for long-term operations."
+                        data-da="<strong>Tilgængelige digitale arkiver og stærk opbevaringsstyring</strong> reducerer tid brugt på at søge information, understøtter offentlige forespørgsler, forhindrer vidensforringing ved personaleomsætning og skaber et pålideligt digitalt fundament for langsigtede operationer."><strong>Accessible digital archives and strong retention governance</strong> reduce time spent searching for information, support public inquiries, prevent knowledge loss from staff turnover, and create a reliable digital foundation for long-term operations.</li>
+                </ul>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Body-level popups — outside any stacking context -->
+    <img id="global-popup" src="" alt="preview"/>
+    <div id="chip-popup">
+        <div class="popup-icon" id="chip-popup-icon"></div>
+        <div class="popup-title" id="chip-popup-title"></div>
+        <div class="popup-body"  id="chip-popup-body"></div>
+    </div>
+
+    <script>
+        let currentLang = 'en';
+        let currentRole = 'bim';
+
+        // Language switching
+        function setLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn' + lang.toUpperCase()).classList.add('active');
+
+            document.querySelectorAll('[data-en]').forEach(el => {
+                // Skip elements inside chip popups — popup JS reads data attributes directly
+                if (el.closest('.popup')) return;
+                // Skip chip elements that CONTAIN a popup — innerHTML would wipe it out
+                if (el.querySelector('.popup')) return;
+
+                if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = el.getAttribute('data-' + lang);
+                } else {
+                    el.innerHTML = el.getAttribute('data-' + lang);
+                }
+            });
+        }
+
+        // Role switching
+        function setRole(role, btn) {
+            currentRole = role;
+
+            // Update role buttons
+            document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Show/hide role panels
+            document.querySelectorAll('.role-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('panel-' + role).classList.add('active');
+
+            // Show/hide segment tab containers
+            document.getElementById('bim-tabs').style.display = (role === 'bim') ? 'block' : 'none';
+            document.getElementById('doc-tabs').style.display = (role === 'doc') ? 'block' : 'none';
+
+            // Activate first tab in new role
+            const firstTab = document.querySelector('.tab-btn[data-role-scope="' + role + '"]');
+            if(firstTab) {
+                const firstTabId = firstTab.getAttribute('data-tab');
+                setTab(firstTabId, firstTab);
+            }
+        }
+
+        // Tab switching
+        function setTab(tabId, btn) {
+            // Update active tab button
+            const scope = btn.getAttribute('data-role-scope');
+            document.querySelectorAll('.tab-btn[data-role-scope="' + scope + '"]').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Show/hide content
+            const panelId = 'panel-' + scope;
+            document.querySelectorAll('#' + panelId + ' .seg-view').forEach(v => v.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        // Attach tab click handlers
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                setTab(btn.getAttribute('data-tab'), btn);
+            });
+        });
+
+        // ── CHIP POPUP (body-level, never obscured) ──
+        var chipPopup      = document.getElementById('chip-popup');
+        var chipPopupIcon  = document.getElementById('chip-popup-icon');
+        var chipPopupTitle = document.getElementById('chip-popup-title');
+        var chipPopupBody  = document.getElementById('chip-popup-body');
+
+        function getCurrentLang() {
+            var btn = document.querySelector('.lang-btn.active');
+            return btn ? btn.textContent.trim().toLowerCase() : 'en';
+        }
+
+        document.querySelectorAll('.chip').forEach(function(chip) {
+            chip.addEventListener('mouseenter', function() {
+                var p = chip.querySelector('.popup');
+                if (!p) return;
+                var lang = getCurrentLang();
+                var iconEl  = p.querySelector('.popup-icon');
+                var titleEl = p.querySelector('.popup-title');
+                var bodyEl  = p.querySelector('div:last-child');
+                chipPopupIcon.textContent  = iconEl  ? iconEl.textContent  : '';
+                chipPopupTitle.textContent = titleEl ? (titleEl.getAttribute('data-' + lang) || titleEl.textContent) : '';
+                chipPopupBody.textContent  = bodyEl  ? (bodyEl.getAttribute('data-'  + lang) || bodyEl.textContent)  : '';
+                chipPopup.style.display = 'block';
+            });
+            chip.addEventListener('mouseleave', function() {
+                chipPopup.style.display = 'none';
+            });
+            chip.addEventListener('click', function() {
+                var link = chip.getAttribute('data-link');
+                if (link) window.open(link, '_blank');
+            });
+        });
+
+        // ── IMAGE HOVER POPUP (body-level) ──
+        document.querySelectorAll('.hover-wrap').forEach(function(wrap) {
+            var imgEl  = wrap.querySelector('.popup-img');
+            var popup  = document.getElementById('global-popup');
+            if (!imgEl || !popup) return;
+            wrap.addEventListener('mouseenter', function() {
+                popup.src = imgEl.src;
+                popup.style.display = 'block';
+            });
+            wrap.addEventListener('mouseleave', function() {
+                popup.style.display = 'none';
+            });
+        });
+    </script>
+
+
+
+</body>
+</html>
